@@ -47,7 +47,7 @@
                                     <div class="form-check form-check-flat form-check-primary">
                                         <label class="form-check-label">
                                             <input type="checkbox" class="form-check-input" name="roles[{{$role->name}}]">
-                                            {{ $role->display_name }}
+                                            {{ ucfirst(strtolower($role->name)) }}
                                         </label>
                                     </div>
                                 @endforeach
