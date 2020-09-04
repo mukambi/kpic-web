@@ -138,7 +138,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
@@ -192,7 +192,7 @@
       <option name="presentableId" value="Default" />
       <updated>1598940654753</updated>
       <workItem from="1598940657789" duration="32688000" />
-      <workItem from="1599203327511" duration="12346000" />
+      <workItem from="1599203327511" duration="13568000" />
     </task>
     <servers />
   </component>
