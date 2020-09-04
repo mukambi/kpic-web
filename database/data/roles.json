@@ -1,0 +1,46 @@
+[
+  {
+    "name": "admin",
+    "permissions" : [
+      "view_configurations",
+      "view_sep_types",
+      "edit_sep_type",
+      "create_sep_type",
+      "delete_sep_type",
+      "view_pcns",
+      "create_pcn",
+      "edit_pcn",
+      "delete_pcn",
+      "view_kpics",
+      "create_kpic",
+      "lookup_kpic",
+      "show_lookup_kpic",
+      "view_dedup_reports",
+      "view_seps",
+      "create_sep",
+      "edit_sep",
+      "edit_sep_users",
+      "view_system_users",
+      "create_system_users",
+      "view_mobility_list",
+      "view_kpic_list"
+    ]
+  },
+  {
+    "name": "manager",
+    "permissions": [
+      "view_dedup_reports",
+      "view_mobility_list",
+      "view_kpic_list"
+    ]
+  },
+  {
+    "name": "user",
+    "permissions": [
+      "view_kpics",
+      "create_kpic",
+      "lookup_kpic",
+      "show_lookup_kpic"
+    ]
+  }
+]
