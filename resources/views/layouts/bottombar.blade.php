@@ -57,7 +57,7 @@
                             @can('view_sep_types')
                                 <li class="nav-item">
                                     <a class="nav-link {{ Route::is(['configuration.sep-type.*']) ? 'active' : null }}" href="{{ route('configuration.sep-type.index') }}">
-                                        Sep Type
+                                        Service Entry Point Type
                                     </a>
                                 </li>
                             @endcan
