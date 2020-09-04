@@ -138,7 +138,12 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -187,7 +192,7 @@
       <option name="presentableId" value="Default" />
       <updated>1598940654753</updated>
       <workItem from="1598940657789" duration="32688000" />
-      <workItem from="1599203327511" duration="9660000" />
+      <workItem from="1599203327511" duration="12069000" />
     </task>
     <servers />
   </component>
@@ -199,6 +204,14 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="514" y="337" key="#Composer/0.0.1440.900/-1920.0.1920.1080@0.0.1440.900" timestamp="1599034806616" />
+    <state x="320" y="115" key="#Deployment" timestamp="1599217138413">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="320" y="115" key="#Deployment/0.0.1440.900/-1920.0.1920.1080@0.0.1440.900" timestamp="1599217138413" />
+    <state x="304" y="102" key="#SSH_Configurations" timestamp="1599217118305">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="304" y="102" key="#SSH_Configurations/0.0.1440.900/-1920.0.1920.1080@0.0.1440.900" timestamp="1599217118305" />
     <state x="540" y="150" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1598947385161">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
@@ -239,6 +252,10 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="523" y="375" key="ReplaceDuplicatesPrompt/0.0.1440.900/-1920.0.1920.1080@0.0.1440.900" timestamp="1599205546448" />
+    <state x="556" y="356" key="WebDeployment.AddServerDialog.v.1" timestamp="1599217026995">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="556" y="356" key="WebDeployment.AddServerDialog.v.1/0.0.1440.900/-1920.0.1920.1080@0.0.1440.900" timestamp="1599217026995" />
     <state x="418" y="205" width="604" height="490" key="find.popup" timestamp="1599036076420">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
