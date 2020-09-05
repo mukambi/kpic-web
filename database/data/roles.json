@@ -3,6 +3,7 @@
     "name": "admin",
     "permissions" : [
       "view_configurations",
+      "view_api_tokens",
       "view_sep_types",
       "edit_sep_type",
       "create_sep_type",
@@ -23,7 +24,12 @@
       "view_system_users",
       "create_system_users",
       "view_mobility_list",
-      "view_kpic_list"
+      "view_kpic_list",
+      "api_lookup_kpic",
+      "api_generate_kpic",
+      "api_get_pcns",
+      "api_get_seps",
+      "api_get_seps_types"
     ]
   },
   {
@@ -40,7 +46,12 @@
       "view_kpics",
       "create_kpic",
       "lookup_kpic",
-      "show_lookup_kpic"
+      "show_lookup_kpic",
+      "api_lookup_kpic",
+      "api_generate_kpic",
+      "api_get_pcns",
+      "api_get_seps",
+      "api_get_seps_types"
     ]
   }
 ]

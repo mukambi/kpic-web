@@ -27,6 +27,7 @@ Route::get('/configuration/sep-types/edit/{id}', 'Configuration\SepTypeControlle
 Route::patch('/configuration/sep-types/update/{id}', 'Configuration\SepTypeController@update')->name('configuration.sep-type.update');
 Route::delete('/configuration/sep-types/delete/{id}', 'Configuration\SepTypeController@destroy')->name('configuration.sep-type.destroy');
 
+Route::get('/configuration/credentials', 'Configuration\CredentialController@index')->name('configuration.credentials.index');
 Route::get('/configuration/pcn', 'Configuration\PcnController@index')->name('configuration.pcn.index');
 Route::get('/configuration/pcn/create', 'Configuration\PcnController@create')->name('configuration.pcn.create');
 Route::post('/configuration/pcn/create', 'Configuration\PcnController@store')->name('configuration.pcn.save');

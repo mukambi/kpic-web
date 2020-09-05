@@ -68,6 +68,13 @@
                                     </a>
                                 </li>
                             @endcan
+                            @can('view_api_tokens')
+                                <li class="nav-item">
+                                    <a class="nav-link {{ Route::is(['configuration.credentials.*']) ? 'active' : null }}" href="{{ route('configuration.credentials.index') }}">
+                                        Api Credentials
+                                    </a>
+                                </li>
+                            @endcan
                         </ul>
                     </div>
                 </li>

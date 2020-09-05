@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
              RoleTableSeeder::class,
              UserTableSeeder::class,
              SepTableSeeder::class,
+             OauthSeeder::class,
              KPICTableSeeder::class
          ]);
     }
