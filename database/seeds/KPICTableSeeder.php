@@ -48,7 +48,6 @@ class KPICTableSeeder extends Seeder
         ]);
 
         $icons = Icon::orderBy('name')->limit(4)->get()->pluck('id')->toArray();
-
         $patient->icons()->sync($icons);
 
         $kpic_code = $this->generateKPIC(
