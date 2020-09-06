@@ -36,44 +36,6 @@
                         </div>
                         <div class="row">
                             <div class="col-6">
-                                <label for="year">{{ __('Year of enrolment') }}
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <select name="year" id="year" class="form-control @error('year') is-invalid @enderror" required>
-                                    <option {{ old('year') ? null : "selected" }} disabled>Select Year of enrolment</option>
-                                    @foreach($years as $year)
-                                        <option
-                                            {{ old('year') && (old('year') == $year) ? "selected" : null }}
-                                            value="{{ $year }}">{{ $year }}</option>
-                                    @endforeach
-                                </select>
-                                @error('year')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                            <div class="col-6">
-                                <label for="month">{{ __('Month of enrolment') }}
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <select name="month" id="month" class="form-control @error('month') is-invalid @enderror" required>
-                                    <option {{ old('month') ? null : "selected" }} disabled>Select Month of enrolment</option>
-                                    @foreach($months as $month)
-                                        <option
-                                            {{ old('month') && (old('month') == $month) ? "selected" : null }}
-                                            value="{{ $month }}">{{ $month }}</option>
-                                    @endforeach
-                                </select>
-                                @error('month')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
                                 <label for="first_name">{{ __('First Name') }}
                                     <span class="text-danger">*</span>
                                 </label>
@@ -99,7 +61,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-6">
                                 <label for="yob">{{ __('Year of Birth') }}
                                     <span class="text-danger">*</span>
                                 </label>
@@ -111,19 +73,19 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <label for="pcn_id">{{ __('Population Category') }}
+                            <div class="col-6">
+                                <label for="mob">{{ __('Month of Birth') }}
                                     <span class="text-danger">*</span>
                                 </label>
-                                <select name="pcn_id" id="pcn_id" class="form-control @error('pcn_id') is-invalid @enderror" required>
-                                    <option {{ old('pcn_id') ? null : "selected" }} disabled>Select Population Category</option>
-                                    @foreach($pcns as $pcn)
-                                        <option {{ old('pcn_id') && (old('pcn_id') == $pcn->id) ? "selected" : null }} value="{{ $pcn->id }}">{{ strtoupper($pcn->name) }}</option>
+                                <select name="mob" id="mob" class="form-control @error('mob') is-invalid @enderror" required>
+                                    <option {{ old('mob') ? null : "selected" }} disabled>Select Month of Birth</option>
+                                    @foreach($months as $month)
+                                        <option
+                                            {{ old('mob') && (old('mob') == $month) ? "selected" : null }}
+                                            value="{{ $month }}">{{ $month }}</option>
                                     @endforeach
                                 </select>
-                                @error('pcn_id')
+                                @error('month')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

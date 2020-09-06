@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 class KPICTableSeeder extends Seeder
 {
     use GeneratesKPIC;
+
     /**
      * Run the database seeds.
      *
@@ -23,34 +24,30 @@ class KPICTableSeeder extends Seeder
         $first_name = 'Elizabeth';
         $last_name = 'Ageno';
         $yob = 1980;
-        $month = 'January';
-        $year = 2020;
+        $mob = 'April';
 
-        $this->generatedSeedKPIC($sep, $pcn, $first_name, $last_name, $yob, $month, $year);
+        $this->generatedSeedKPIC($sep, $first_name, $last_name, $yob, $mob);
 
         $first_name = 'Ezra';
         $last_name = 'Agatha';
         $yob = 1980;
-        $month = 'June';
-        $year = 2020;
+        $mob = 'April';
 
-        $this->generatedSeedKPIC($sep, $pcn, $first_name, $last_name, $yob, $month, $year);
+        $this->generatedSeedKPIC($sep, $first_name, $last_name, $yob, $mob);
     }
 
-    public function generatedSeedKPIC($sep, $pcn, $first_name, $last_name, $yob, $month, $year)
+    public function generatedSeedKPIC($sep, $first_name, $last_name, $yob, $mob)
     {
         $patient = Patient::create([
             'first_name' => $first_name,
             'last_name' => $last_name,
             'yob' => $yob,
-            'pcn_id' => $pcn->id,
+            'mob' => $mob,
             'sep_id' => $sep->id,
-            'month' => $month,
-            'year' => $year
         ]);
 
         $kpic_code = $this->generateKPIC(
-            $patient, $sep, $pcn, $year, $month, $first_name, $last_name, $yob
+            $patient, $sep, $first_name, $last_name, $yob, $mob
         );
 
         $patient->update([

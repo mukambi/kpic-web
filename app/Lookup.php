@@ -10,7 +10,7 @@ class Lookup extends Model
     use UsesUuid;
 
     protected $fillable = [
-        'patient_id', 'duplicate_patient_ids', 'first_name', 'last_name', 'yob', 'pcn_id', 'sep_id', 'month', 'year'
+        'patient_id', 'duplicate_patient_ids', 'first_name', 'last_name', 'yob', 'sep_id', 'mob'
     ];
 
     protected $appends = [

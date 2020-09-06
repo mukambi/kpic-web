@@ -20,20 +20,13 @@ class CreateLookupsTable extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->integer('yob');
-            $table->string('month');
-            $table->integer('year');
-            $table->uuid('pcn_id');
+            $table->string('mob');
             $table->uuid('sep_id');
             $table->timestampsTz();
 
             $table->foreign('patient_id')
                 ->references('id')
                 ->on('patients')
-                ->onDelete('cascade');
-
-            $table->foreign('pcn_id')
-                ->references('id')
-                ->on('pcns')
                 ->onDelete('cascade');
 
             $table->foreign('sep_id')
