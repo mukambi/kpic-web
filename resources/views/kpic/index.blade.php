@@ -33,7 +33,6 @@
                             <tr>
                                 <th>#</th>
                                 <th>KPIC Code</th>
-                                <th>Hash</th>
                                 <th>Service Entry Point</th>
                                 <th>Actions</th>
                             </tr>
@@ -42,7 +41,6 @@
                             <tr>
                                 <th>#</th>
                                 <th>KPIC Code</th>
-                                <th>Hash</th>
                                 <th>Service Entry Point</th>
                                 <th>Actions</th>
                             </tr>
@@ -53,9 +51,6 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>
                                         <code>{{ $patient->kpic_code }}</code>
-                                    </td>
-                                    <td>
-                                        <code>{{ $patient->hash }}</code>
                                     </td>
                                     <td>{{ $patient->sep->name }}</td>
                                     <td>
