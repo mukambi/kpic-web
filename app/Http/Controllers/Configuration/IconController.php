@@ -18,7 +18,7 @@ class IconController extends Controller
     {
         $this->authorize('view_icons');
         return view('configuration.icons.index', [
-            'icons' => Icon::all()
+            'icons' => Icon::orderBy('name')->get()
         ]);
     }
 
