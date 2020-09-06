@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Traits\GeneratesKPIC;
+use App\Icon;
 use App\Patient;
 use App\Pcn;
 use App\Sep;
@@ -45,6 +46,10 @@ class KPICTableSeeder extends Seeder
             'mob' => $mob,
             'sep_id' => $sep->id,
         ]);
+
+        $icons = Icon::orderBy('name')->limit(4)->get()->pluck('id')->toArray();
+
+        $patient->icons()->sync($icons);
 
         $kpic_code = $this->generateKPIC(
             $patient, $sep, $first_name, $last_name, $yob, $mob

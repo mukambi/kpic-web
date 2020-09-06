@@ -15,6 +15,9 @@
                     <form action="{{ route('lookup.search') }}" method="post">
                         @csrf
                         <div class="row">
+                            <div class="col-12 my-2">
+                                <h3 class="border-bottom border-primary">User information</h3>
+                            </div>
                             <div class="col-12">
                                 <label for="sep_id">{{ __('Service Entry Point') }}
                                     <span class="text-danger">*</span>
@@ -91,6 +94,24 @@
                                     </span>
                                 @enderror
                             </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 mt-4 mb-2">
+                                <h3 class="border-bottom border-primary">Icons</h3>
+                            </div>
+                        </div>
+                        <div class="row m-auto">
+                            @foreach($icons as $icon)
+                                <div class="col-4 border">
+                                    <div class="form-check form-check-flat form-check-primary">
+                                        <label class="form-check-label">
+                                            <input type="checkbox" class="form-check-input" name="icons[{{$icon->id}}]" {{ in_array($icon->id, (array_keys(old('icons') ?? [])) ) ? "checked" : null }}>
+                                            {{$icon->name}}
+                                        </label>
+                                    </div>
+                                    <img src="{{$icon->asset_url}}" alt="{{$icon->name}}" height="100">
+                                </div>
+                            @endforeach
                         </div>
                         <div class="form-actions text-right border-top mt-4">
                             <div class="mt-2">

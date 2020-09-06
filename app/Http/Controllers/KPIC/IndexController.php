@@ -4,6 +4,7 @@ namespace App\Http\Controllers\KPIC;
 
 use App\Http\Controllers\Controller;
 use App\Http\Traits\GeneratesKPIC;
+use App\Icon;
 use App\Patient;
 use App\Pcn;
 use App\Sep;
@@ -33,7 +34,8 @@ class IndexController extends Controller
             'seps' => Sep::all(),
             'months' => ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
             'years' => range(2019,date('Y')),
-            'pcns' => Pcn::all()
+            'pcns' => Pcn::all(),
+            'icons' => Icon::all()
         ]);
     }
 

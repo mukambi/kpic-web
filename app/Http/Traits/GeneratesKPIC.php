@@ -3,9 +3,7 @@
 namespace App\Http\Traits;
 
 use App\AuditTrail;
-use App\Lookup;
 use App\Patient;
-use App\Pcn;
 use App\Sep;
 use App\User;
 use Illuminate\Http\Request;
@@ -29,6 +27,8 @@ trait GeneratesKPIC
                 'sep_id' => $sep->id,
             ]);
 
+            $patient->icons()->sync(array_keys($request->icons));
+
             $kpic_code = $this->generateKPIC(
                 $patient, $sep, $request->first_name, $request->last_name, $request->yob, $request->mob
             );
@@ -51,6 +51,10 @@ trait GeneratesKPIC
             'last_name' => 'required|string|max:255',
             'yob' => 'required|integer|max:' . date('Y'),
             'mob' => 'nullable|string|max:255',
+            'icons' => 'required|max:4|min:4'
+        ], [
+            'icons.min' => 'The icons must be at least 4.',
+            'icons.max' => 'The icons must be at most 4.',
         ]);
     }
 
@@ -75,16 +79,6 @@ trait GeneratesKPIC
         ];
     }
 
-    protected function storeTrail(Patient $patient, Sep $sep, $status, $user = null)
-    {
-        AuditTrail::create([
-            'sep_id' => $sep->id,
-            'patient_id' => $patient->id,
-            'user_id' => $user ? $user->id : User::first()->id,
-            'action' => $status
-        ]);
-    }
-
     protected function getSEPCode(Sep $sep): string
     {
         return (string)$sep->code . $sep->type->code;
@@ -97,7 +91,17 @@ trait GeneratesKPIC
         $cy = substr($yob, -2);
         $cm = strtoupper($mob)[0];
 
-        return (string) $cm. $f . $l . $cy;
+        return (string)$cm . $f . $l . $cy;
+    }
+
+    protected function storeTrail(Patient $patient, Sep $sep, $status, $user = null)
+    {
+        AuditTrail::create([
+            'sep_id' => $sep->id,
+            'patient_id' => $patient->id,
+            'user_id' => $user ? $user->id : User::first()->id,
+            'action' => $status
+        ]);
     }
 
     protected function formatPatientId(Patient $patient)
@@ -116,9 +120,14 @@ trait GeneratesKPIC
                 $sep, $request->first_name, $request->last_name, $request->yob, $request->mob
             );
 
-            $patients = Patient::where('short_kpic_code', $short_kpic_code)->get();
-            foreach ($patients as $patient){
-                $array = collect($patients)->reject(function ($p) use ($patient){
+            $patients = Patient::query()
+                ->where('short_kpic_code', $short_kpic_code)
+                ->whereHas('icons', function ($query) use($request){
+                    $query->whereIn('icons.id', array_keys($request->icons));
+                })->get();
+
+            foreach ($patients as $patient) {
+                $array = collect($patients)->reject(function ($p) use ($patient) {
                     return $p->id == $patient->id;
                 })->pluck('id')->toArray();
                 $patient->lookups()->create([
@@ -146,10 +155,10 @@ trait GeneratesKPIC
 
     public function getShortKPICCode($code)
     {
-        $array_code = explode("-",$code);
-        switch (count($array_code)){
+        $array_code = explode("-", $code);
+        switch (count($array_code)) {
             case 3:
-                return implode('-',[$array_code[0], $array_code[1]]);
+                return implode('-', [$array_code[0], $array_code[1]]);
             case 2:
                 return $code;
             default:
