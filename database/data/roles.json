@@ -25,11 +25,10 @@
       "create_system_users",
       "view_mobility_list",
       "view_kpic_list",
-      "api_lookup_kpic",
-      "api_generate_kpic",
-      "api_get_pcns",
-      "api_get_seps",
-      "api_get_seps_types"
+      "view_icons",
+      "create_icon",
+      "edit_icon",
+      "delete_icon"
     ]
   },
   {
@@ -51,7 +50,8 @@
       "api_generate_kpic",
       "api_get_pcns",
       "api_get_seps",
-      "api_get_seps_types"
+      "api_get_seps_types",
+      "api_get_icons"
     ]
   }
 ]

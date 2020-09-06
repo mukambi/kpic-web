@@ -42,4 +42,13 @@ class Patient extends Model
             'patient_id'
         );
     }
+
+    public function icons()
+    {
+        return $this->belongsToMany(
+            Icon::class,
+            'icon_patients'
+        )->using(IconPatient::class)
+            ->withTimestamps();
+    }
 }

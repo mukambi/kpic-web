@@ -63,10 +63,10 @@
                                     </a>
                                 </li>
                             @endcan
-                            @can('view_pcns')
+                            @can('view_icons')
                                 <li class="nav-item">
-                                    <a class="nav-link {{ Route::is(['configuration.pcn.*']) ? 'active' : null }}" href="{{ route('configuration.pcn.index') }}">
-                                        Population Category Number
+                                    <a class="nav-link {{ Route::is(['configuration.icons.*']) ? 'active' : null }}" href="{{ route('configuration.icons.index') }}">
+                                        Icons
                                     </a>
                                 </li>
                             @endcan

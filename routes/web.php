@@ -27,6 +27,13 @@ Route::get('/configuration/sep-types/edit/{id}', 'Configuration\SepTypeControlle
 Route::patch('/configuration/sep-types/update/{id}', 'Configuration\SepTypeController@update')->name('configuration.sep-type.update');
 Route::delete('/configuration/sep-types/delete/{id}', 'Configuration\SepTypeController@destroy')->name('configuration.sep-type.destroy');
 
+Route::get('/configuration/icons', 'Configuration\IconController@index')->name('configuration.icons.index');
+Route::get('/configuration/icons/create', 'Configuration\IconController@create')->name('configuration.icons.create');
+Route::post('/configuration/icons/create', 'Configuration\IconController@store')->name('configuration.icons.save');
+Route::get('/configuration/icons/edit/{id}', 'Configuration\IconController@edit')->name('configuration.icons.edit');
+Route::patch('/configuration/icons/update/{id}', 'Configuration\IconController@update')->name('configuration.icons.update');
+Route::delete('/configuration/icons/delete/{id}', 'Configuration\IconController@destroy')->name('configuration.icons.destroy');
+
 Route::get('/configuration/credentials', 'Configuration\CredentialController@index')->name('configuration.credentials.index');
 Route::get('/configuration/pcn', 'Configuration\PcnController@index')->name('configuration.pcn.index');
 Route::get('/configuration/pcn/create', 'Configuration\PcnController@create')->name('configuration.pcn.create');

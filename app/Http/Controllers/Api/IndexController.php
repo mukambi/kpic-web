@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Traits\GeneratesKPIC;
+use App\Icon;
 use App\Patient;
 use App\Pcn;
 use App\Sep;
@@ -50,5 +51,11 @@ class IndexController extends Controller
     {
         $this->authorize('api_get_seps_types');
         return response()->json(SepType::all('id', 'name', 'code'));
+    }
+
+    public function icons()
+    {
+        $this->authorize('api_get_icons');
+        return response()->json(Icon::all());
     }
 }
