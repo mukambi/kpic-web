@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->group(function () {
     Route::post('/kpics/generate', 'Api\IndexController@generate')->name('kpics.generate');
     Route::post('/kpics/lookup', 'Api\IndexController@lookup')->name('kpics.lookup');
-    Route::get('/pcns', 'Api\IndexController@pcns')->name('pcns.get');
     Route::get('/seps', 'Api\IndexController@seps')->name('seps.get');
     Route::get('/seps/types', 'Api\IndexController@sepsTypes')->name('seps.types');
 });
