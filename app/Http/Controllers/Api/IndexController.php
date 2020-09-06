@@ -56,6 +56,6 @@ class IndexController extends Controller
     public function icons()
     {
         $this->authorize('api_get_icons');
-        return response()->json(Icon::all());
+        return response()->json(Icon::orderBy('name')->get());
     }
 }
