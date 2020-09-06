@@ -57,7 +57,7 @@
 
                         </div>
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-6">
                                 <label for="type_id">{{ __('Type') }}
                                     <span class="text-danger">*</span>
                                 </label>
@@ -73,6 +73,18 @@
                                 </select>
                                 @error('type_id')
                                 <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="col-6">
+                                <label for="geocode">{{ __('Geocode') }}
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" class="form-control @error('geocode') is-invalid @enderror"
+                                       id="geocode" name="geocode" value="{{ old('geocode') ?: $sep->geocode }}">
+                                @error('geocode')
+                                    <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror

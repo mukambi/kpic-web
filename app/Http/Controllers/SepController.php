@@ -39,7 +39,8 @@ class SepController extends Controller
             'location' => 'required|string|max:255',
             'code' => 'required|integer|unique:seps',
             'name' => 'required|string|max:255',
-            'type_id' => 'required|uuid'
+            'type_id' => 'required|uuid',
+            'geocode' => 'nullable|string'
         ]);
 
         DB::transaction(function () use ($request) {
@@ -48,6 +49,7 @@ class SepController extends Controller
                 'name' => $request->name,
                 'code' => $request->code,
                 'type_id' => $request->type_id,
+                'geocode' => $request->geocode
             ]);
         });
 
@@ -73,7 +75,8 @@ class SepController extends Controller
             'location' => 'required|string|max:255',
             'code' => ['required', 'integer', Rule::unique('seps')->ignore($sep->id)],
             'name' => 'required|string|max:255',
-            'type_id' => 'required|uuid'
+            'type_id' => 'required|uuid',
+            'geocode' => 'nullable|string'
         ]);
 
         DB::transaction(function () use ($request, $sep) {
@@ -82,6 +85,7 @@ class SepController extends Controller
                 'name' => $request->name,
                 'code' => $request->code,
                 'type_id' => $request->type_id,
+                'geocode' => $request->geocode
             ]);
         });
 

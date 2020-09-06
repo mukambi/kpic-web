@@ -36,6 +36,7 @@
                                 <th>Code</th>
                                 <th>Type</th>
                                 <th>Users</th>
+                                <th>Geocode</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -46,6 +47,7 @@
                                 <th>Code</th>
                                 <th>Type</th>
                                 <th>Users</th>
+                                <th>Geocode</th>
                                 <th>Actions</th>
                             </tr>
                             </tfoot>
@@ -57,6 +59,7 @@
                                     <td>{{ $sep->code }}</td>
                                     <td>{{ $sep->type->name }}</td>
                                     <td>{{ $sep->users->count() }}</td>
+                                    <td>{{ $sep->geocode ?: 'N/A' }}</td>
                                     <td>
                                         @can('edit_sep')
                                             <a href="{{ route('seps.edit', ['id' => $sep->id]) }}" class="btn btn-primary">Edit Service Entry point</a>

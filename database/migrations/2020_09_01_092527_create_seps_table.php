@@ -18,6 +18,7 @@ class CreateSepsTable extends Migration
             $table->string('location');
             $table->bigInteger('code')->unique();
             $table->string('name');
+            $table->longText('geocode')->nullable();
             $table->uuid('type_id');
             $table->timestampsTz();
 
