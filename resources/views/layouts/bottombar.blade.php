@@ -7,12 +7,14 @@
                     <span class="menu-title">Home</span>
                 </a>
             </li>
-            <li class="nav-item {{ Route::is(['kpic.*']) ? 'active' : null }}">
-                <a class="nav-link" href="{{ route('kpic.index') }}">
-                    <i class="link-icon" data-feather="key"></i>
-                    <span class="menu-title">KPIC Management</span>
-                </a>
-            </li>
+            @can('view_kpics')
+                <li class="nav-item {{ Route::is(['kpic.*']) ? 'active' : null }}">
+                    <a class="nav-link" href="{{ route('kpic.index') }}">
+                        <i class="link-icon" data-feather="key"></i>
+                        <span class="menu-title">KPIC Management</span>
+                    </a>
+                </li>
+            @endcan
             @can('view_system_users')
                 <li class="nav-item {{ Route::is(['seps*', 'users*']) ? 'active' : null }}" >
                     <a class="nav-link" href="{{ route('seps.index') }}">
