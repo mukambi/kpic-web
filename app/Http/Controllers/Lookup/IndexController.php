@@ -27,7 +27,7 @@ class IndexController extends Controller
             'months' => ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
             'years' => range(2019, date('Y')),
             'pcns' => Pcn::all(),
-            'icons' => Icon::all()
+            'icons' => Icon::orderBy('name')->get()
         ]);
     }
 
@@ -35,13 +35,19 @@ class IndexController extends Controller
     {
         $this->authorize('lookup_kpic');
         $short_kpic_code = $this->lookupPatientRecord($request);
-        return redirect()->route('lookup.show', ['code' => (string)$short_kpic_code]);
+        return redirect()->route('lookup.show', [
+            'code' => (string) $short_kpic_code,
+            'icon_id' => (string) $request->icon
+        ]);
     }
 
-    public function show($code)
+    public function show($code, $icon_id)
     {
         $this->authorize('show_lookup_kpic');
-        $patients = Patient::with('sep')->where('short_kpic_code', $code)->get();
+        $patients = Patient::with('sep')
+            ->where('short_kpic_code', $code)
+            ->where('icon_id', $icon_id)
+            ->get();
         return view('lookup.show', [
             'patients' => $patients
         ]);

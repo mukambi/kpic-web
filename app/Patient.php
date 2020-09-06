@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Patient extends Model
 {
     protected $fillable = [
-        'kpic_code', 'short_kpic_code', 'hash', 'first_name', 'last_name', 'yob', 'mob', 'sep_id'
+        'kpic_code', 'short_kpic_code', 'hash', 'first_name', 'last_name', 'yob', 'mob', 'sep_id', 'icon_id'
     ];
 
     protected $appends = [
@@ -43,12 +43,11 @@ class Patient extends Model
         );
     }
 
-    public function icons()
+    public function icon()
     {
-        return $this->belongsToMany(
+        return $this->belongsTo(
             Icon::class,
-            'icon_patients'
-        )->using(IconPatient::class)
-            ->withTimestamps();
+            'icon_id'
+        );
     }
 }

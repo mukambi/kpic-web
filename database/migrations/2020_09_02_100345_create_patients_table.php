@@ -23,11 +23,17 @@ class CreatePatientsTable extends Migration
             $table->integer('yob');
             $table->string('mob');
             $table->uuid('sep_id');
+            $table->uuid('icon_id');
             $table->timestampsTz();
 
             $table->foreign('sep_id')
                 ->references('id')
                 ->on('seps')
+                ->onDelete('cascade');
+
+            $table->foreign('icon_id')
+                ->references('id')
+                ->on('icons')
                 ->onDelete('cascade');
         });
     }

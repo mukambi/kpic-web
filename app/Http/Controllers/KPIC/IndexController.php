@@ -35,7 +35,7 @@ class IndexController extends Controller
             'months' => ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
             'years' => range(2019,date('Y')),
             'pcns' => Pcn::all(),
-            'icons' => Icon::all()
+            'icons' => Icon::orderBy('name')->get()
         ]);
     }
 

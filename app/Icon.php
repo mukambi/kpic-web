@@ -24,10 +24,9 @@ class Icon extends Model
 
     public function patients()
     {
-        return $this->belongsToMany(
+        return $this->hasMany(
             Patient::class,
-            'icon_patients'
-        )->using(IconPatient::class)
-            ->withTimestamps();
+            'icon_id'
+        );
     }
 }

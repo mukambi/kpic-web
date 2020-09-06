@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css') }}">
 @endsection
 @section('content')
-    @component('layouts.components.breadcrumbs',['name' => 'Duplicate KPICs'])@endcomponent
+    @component('layouts.components.breadcrumbs',['name' => 'KPIC List'])@endcomponent
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">

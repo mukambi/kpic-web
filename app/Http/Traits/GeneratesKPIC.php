@@ -25,9 +25,8 @@ trait GeneratesKPIC
                 'yob' => $request->yob,
                 'mob' => $request->mob,
                 'sep_id' => $sep->id,
+                'icon_id' => $request->icon
             ]);
-
-            $patient->icons()->sync(array_keys($request->icons));
 
             $kpic_code = $this->generateKPIC(
                 $patient, $sep, $request->first_name, $request->last_name, $request->yob, $request->mob
@@ -51,10 +50,7 @@ trait GeneratesKPIC
             'last_name' => 'required|string|max:255',
             'yob' => 'required|integer|max:' . date('Y'),
             'mob' => 'nullable|string|max:255',
-            'icons' => 'required|max:4|min:4'
-        ], [
-            'icons.min' => 'The icons must be at least 4.',
-            'icons.max' => 'The icons must be at most 4.',
+            'icon' => 'required|uuid'
         ]);
     }
 
@@ -122,9 +118,8 @@ trait GeneratesKPIC
 
             $patients = Patient::query()
                 ->where('short_kpic_code', $short_kpic_code)
-                ->whereHas('icons', function ($query) use($request){
-                    $query->whereIn('icons.id', array_keys($request->icons));
-                })->get();
+                ->where('icon_id', $request->icon)
+                ->get();
 
             foreach ($patients as $patient) {
                 $array = collect($patients)->reject(function ($p) use ($patient) {

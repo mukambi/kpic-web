@@ -47,7 +47,7 @@ Route::get('/kpics/create', 'KPIC\IndexController@create')->name('kpic.create');
 Route::post('/kpics/create', 'KPIC\IndexController@store')->name('kpic.store');
 
 Route::get('/lookup/create', 'Lookup\IndexController@create')->name('lookup.create');
-Route::get('/lookup/show/{code}', 'Lookup\IndexController@show')->name('lookup.show');
+Route::get('/lookup/show/{code}/{icon_id}', 'Lookup\IndexController@show')->name('lookup.show');
 Route::post('/lookup/create', 'Lookup\IndexController@search')->name('lookup.search');
 
 Route::get('/dedup', 'Dedup\IndexController@index')->name('dedup.index');

@@ -105,7 +105,8 @@
                                 <div class="col-4 border">
                                     <div class="form-check form-check-flat form-check-primary">
                                         <label class="form-check-label">
-                                            <input type="checkbox" class="form-check-input" name="icons[{{$icon->id}}]" {{ in_array($icon->id, (array_keys(old('icons') ?? [])) ) ? "checked" : null }}>
+                                            <input type="radio" class="form-check-input" name="icon" value="{{ $icon->id }}"
+                                                {{ old('icon') && old('icon') == $icon->id ? "checked" : null }}>
                                             {{$icon->name}}
                                         </label>
                                     </div>
