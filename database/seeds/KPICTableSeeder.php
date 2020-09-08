@@ -40,10 +40,6 @@ class KPICTableSeeder extends Seeder
     public function generatedSeedKPIC($sep, $first_name, $last_name, $yob, $mob)
     {
         $patient = Patient::create([
-            'first_name' => $first_name,
-            'last_name' => $last_name,
-            'yob' => $yob,
-            'mob' => $mob,
             'sep_id' => $sep->id,
             'icon_id' => Icon::orderBy('name')->limit(4)->first()->id
         ]);

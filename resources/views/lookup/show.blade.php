@@ -20,9 +20,6 @@
                                 <th>#</th>
                                 <th>KPIC Code</th>
                                 <th>Service Entry Point</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Year of Birth</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -31,9 +28,6 @@
                                 <th>#</th>
                                 <th>KPIC Code</th>
                                 <th>Service Entry Point</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Year of Birth</th>
                                 <th>Actions</th>
                             </tr>
                             </tfoot>
@@ -45,9 +39,6 @@
                                         <code>{{ $patient->kpic_code }}</code>
                                     </td>
                                     <td>{{ $patient->sep->name }}</td>
-                                    <td>{{ $patient->first_name }}</td>
-                                    <td>{{ $patient->last_name }}</td>
-                                    <td>{{ $patient->yob }}</td>
                                     <td>
 
                                     </td>

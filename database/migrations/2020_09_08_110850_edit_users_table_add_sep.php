@@ -30,7 +30,6 @@ class EditUsersTableAddSep extends Migration
      */
     public function down()
     {
-
         Schema::table('users', function (Blueprint $table) {
             $table->dropForeign(['sep_id']);
             $table->dropColumn('sep_id');

@@ -31,6 +31,7 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Roles</th>
+                                <th>Service Entry Point</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -39,6 +40,7 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Roles</th>
+                                <th>Service Entry Point</th>
                                 <th>Actions</th>
                             </tr>
                             </tfoot>
@@ -56,6 +58,13 @@
                                             <span class="badge badge-success">{{ ucfirst(strtolower($role->name)) }}</span>
                                             @if (!$loop->last), @endif
                                         @endforeach
+                                    </td>
+                                    <td>
+                                        @if($user->sep)
+                                            <span>{{ $user->sep->name }}</span>
+                                        @else
+                                            <span class="text-danger">Not Assigned</span>
+                                        @endif
                                     </td>
                                     <td></td>
                                 </tr>

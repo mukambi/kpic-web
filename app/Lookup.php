@@ -10,7 +10,7 @@ class Lookup extends Model
     use UsesUuid;
 
     protected $fillable = [
-        'patient_id', 'duplicate_patient_ids', 'first_name', 'last_name', 'yob', 'sep_id', 'mob'
+        'patient_id', 'duplicate_patient_ids', 'sep_id', 'user_id'
     ];
 
     protected $appends = [
@@ -28,6 +28,14 @@ class Lookup extends Model
         return $this->belongsTo(
             Patient::class,
             'patient_id'
+        );
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(
+            User::class,
+            'user_id'
         );
     }
 }

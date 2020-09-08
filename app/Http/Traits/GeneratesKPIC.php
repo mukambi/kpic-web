@@ -24,10 +24,6 @@ trait GeneratesKPIC
             }
 
             $patient = Patient::create([
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-                'yob' => $request->yob,
-                'mob' => $request->mob,
                 'sep_id' => $sep->id,
                 'icon_id' => $request->icon
             ]);
@@ -134,10 +130,7 @@ trait GeneratesKPIC
                     return $p->id == $patient->id;
                 })->pluck('id')->toArray();
                 $patient->lookups()->create([
-                    'first_name' => $request->first_name,
-                    'last_name' => $request->last_name,
-                    'yob' => $request->yob,
-                    'mob' => $request->mob,
+                    'user_id' => $request->user()->id,
                     'sep_id' => $sep->id,
                     'duplicate_patient_ids' => json_encode($array)
                 ]);
