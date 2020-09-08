@@ -16,7 +16,19 @@
                         @csrf
                         @method('PATCH')
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-6">
+                                <label for="code">{{ __('Code') }}
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" class="form-control @error('code') is-invalid @enderror"
+                                       id="code" name="code" value="{{ old('code') ?: $icon->code }}" required>
+                                @error('name')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="col-6">
                                 <label for="name">{{ __('Name') }}
                                     <span class="text-danger">*</span>
                                 </label>

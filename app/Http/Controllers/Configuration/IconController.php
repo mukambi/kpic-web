@@ -32,6 +32,7 @@ class IconController extends Controller
     {
         $this->authorize('create_icon');
         $request->validate([
+            'code' => 'required|string|max:255',
             'name' => 'required|string|max:255',
             'icon' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
@@ -40,6 +41,7 @@ class IconController extends Controller
             $imageName = $request->name. '_' .time() . '.' . $request->icon->getClientOriginalExtension();
             $request->icon->move(public_path('/icons'), $imageName);
             Icon::create([
+                'code' => $request->code,
                 'name' => $request->name,
                 'image_url' => '/icons/' . $imageName
             ]);
@@ -60,11 +62,13 @@ class IconController extends Controller
     {
         $this->authorize('edit_icon');
         $request->validate([
+            'code' => 'required|string|max:255',
             'name' => 'required|string|max:255',
         ]);
         $icon = Icon::findOrFail($id);
         DB::transaction(function () use ($request, $icon){
             $icon->update([
+                'code' => $request->code,
                 'name' => $request->name
             ]);
         });

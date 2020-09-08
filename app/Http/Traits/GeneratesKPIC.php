@@ -3,6 +3,7 @@
 namespace App\Http\Traits;
 
 use App\AuditTrail;
+use App\Icon;
 use App\Patient;
 use App\Sep;
 use App\User;
@@ -23,13 +24,14 @@ trait GeneratesKPIC
                 $sep = Sep::findOrFail($request->sep_id);
             }
 
+            $icon = Icon::query()->findOrFail($request->icon);
             $patient = Patient::create([
                 'sep_id' => $sep->id,
-                'icon_id' => $request->icon
+                'icon_id' => $icon->id
             ]);
 
             $kpic_code = $this->generateKPIC(
-                $patient, $sep, $request->first_name, $request->last_name, $request->yob, $request->mob
+                $patient, $sep, $request->first_name, $request->last_name, $request->yob, $request->mob, $icon
             );
 
             $patient->update([
@@ -54,10 +56,11 @@ trait GeneratesKPIC
         ]);
     }
 
-    public function generateKPIC(Patient $patient, Sep $sep, string $first_name, string $last_name, int $yob, string $mob): array
+    public function generateKPIC(Patient $patient, Sep $sep, string $first_name, string $last_name, int $yob, string $mob, Icon $icon): array
     {
         $sep_code = $this->getSEPCode($sep);
         $user_data_code = $this->getUserDataCode($first_name, $last_name, $yob, $mob);
+        $icon_code = $this->getIconCode($icon);
 
         $this->storeTrail($patient, $sep, 'Generated', auth()->user());
         return [
@@ -65,7 +68,8 @@ trait GeneratesKPIC
                 (string)implode("-", [
                     $sep_code,
                     $user_data_code,
-                    $this->formatPatientId($patient)
+                    $this->formatPatientId($patient),
+                    $icon_code
                 ]),
             'short_kpic_code' =>
                 (string)implode("-", [
@@ -73,6 +77,15 @@ trait GeneratesKPIC
                     $user_data_code
                 ])
         ];
+    }
+
+    protected function getIconCode(Icon $icon): string
+    {
+        if(strlen($icon->code) <= 2){
+            return (string) sprintf("%02s", $icon->code);
+        }
+
+        return (string) strtoupper($icon->code)[0] . strtoupper($icon->code)[1];
     }
 
     protected function getSEPCode(Sep $sep): string
@@ -102,7 +115,7 @@ trait GeneratesKPIC
 
     protected function formatPatientId(Patient $patient)
     {
-        return (string)sprintf("%05d", $patient->id);
+        return (string) sprintf("%05d", $patient->id);
     }
 
     public function lookupPatientRecord(Request $request)
@@ -153,7 +166,7 @@ trait GeneratesKPIC
     {
         $array_code = explode("-", $code);
         switch (count($array_code)) {
-            case 3:
+            case 4:
                 return implode('-', [$array_code[0], $array_code[1]]);
             case 2:
                 return $code;

@@ -29,6 +29,7 @@
                             <thead>
                             <tr>
                                 <th>#</th>
+                                <th>Code</th>
                                 <th>Name</th>
                                 <th>Image Url</th>
                                 <th>Image</th>
@@ -39,6 +40,7 @@
                             <tfoot>
                             <tr>
                                 <th>#</th>
+                                <th>Code</th>
                                 <th>Name</th>
                                 <th>Image Url</th>
                                 <th>Image</th>
@@ -50,6 +52,9 @@
                             @foreach($icons as $icon)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
+                                    <td>
+                                        <code>{{ $icon->code }}</code>
+                                    </td>
                                     <td>{{ $icon->name }}</td>
                                     <td>
                                         <a href="{{ $icon->asset_url }}" class="">{{ $icon->asset_url }}</a>
