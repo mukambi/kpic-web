@@ -15,11 +15,19 @@
                     </a>
                 </li>
             @endcan
-            @can('view_system_users')
-                <li class="nav-item {{ Route::is(['seps*', 'users*']) ? 'active' : null }}" >
+            @can('view_seps')
+                <li class="nav-item {{ Route::is(['seps*']) ? 'active' : null }}" >
                     <a class="nav-link" href="{{ route('seps.index') }}">
+                        <i class="link-icon" data-feather="map-pin"></i>
+                        <span class="menu-title">Service Entry Points</span>
+                    </a>
+                </li>
+            @endcan
+            @can('view_system_users')
+                <li class="nav-item {{ Route::is(['users*']) ? 'active' : null }}" >
+                    <a class="nav-link" href="{{ route('users.index') }}">
                         <i class="link-icon" data-feather="users"></i>
-                        <span class="menu-title">User Management</span>
+                        <span class="menu-title">Users</span>
                     </a>
                 </li>
             @endcan

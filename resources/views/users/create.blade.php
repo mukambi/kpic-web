@@ -53,6 +53,22 @@
                                 @endforeach
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <label for="sep_id">{{ __('Select Service Entry Provider') }}</label>
+                                <select name="sep_id" id="sep_id" class="form-control @error('sep_id') is-invalid @enderror">
+                                    <option {{ old('sep_id') ? null : "selected" }} disabled>Select Service Entry Provider</option>
+                                    @foreach($seps as $sep)
+                                        <option {{ old('sep_id') && old('sep_id') == $sep->id ? 'selected' : null }} value="{{ $sep->id }}">{{ $sep->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('sep_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
                         <div class="form-actions text-right border-top">
                             <div class="mt-2">
                                 <button type="reset" class="btn btn-warning mr-1">

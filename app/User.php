@@ -22,7 +22,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'sep_id'
     ];
 
     /**
@@ -43,14 +43,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public function seps()
+    public function sep()
     {
-        return $this->belongsToMany(
+        return $this->belongsTo(
             Sep::class,
-            'sep_users',
-            'user_id',
             'sep_id'
-        )->using(SepUser::class)
-            ->withTimestamps();
+        );
     }
 }

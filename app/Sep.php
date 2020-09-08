@@ -20,13 +20,10 @@ class Sep extends Model
 
     public function users()
     {
-        return $this->belongsToMany(
+        return $this->hasMany(
             User::class,
-            'sep_users',
-            'sep_id',
-            'user_id'
-        )->using(SepUser::class)
-            ->withTimestamps();
+            'sep_id'
+        );
     }
 
     public function type()

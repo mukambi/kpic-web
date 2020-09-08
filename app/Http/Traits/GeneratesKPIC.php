@@ -17,7 +17,11 @@ trait GeneratesKPIC
         $this->getValidate($request);
 
         DB::transaction(function () use ($request, &$patient) {
-            $sep = Sep::findOrFail($request->sep_id);
+            if(is_null($request->sep_id)){
+                $sep = $request->user()->sep;
+            } else {
+                $sep = Sep::findOrFail($request->sep_id);
+            }
 
             $patient = Patient::create([
                 'first_name' => $request->first_name,
@@ -45,7 +49,7 @@ trait GeneratesKPIC
     public function getValidate(Request $request): void
     {
         $request->validate([
-            'sep_id' => 'required|uuid',
+            'sep_id' => 'nullable|uuid',
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'yob' => 'required|integer|max:' . date('Y'),
@@ -110,7 +114,11 @@ trait GeneratesKPIC
         $this->getValidate($request);
 
         DB::transaction(function () use ($request, &$short_kpic_code) {
-            $sep = Sep::findOrFail($request->sep_id);
+            if(is_null($request->sep_id)){
+                $sep = $request->user()->sep;
+            } else {
+                $sep = Sep::findOrFail($request->sep_id);
+            }
 
             $short_kpic_code = $this->generateShortKPIC(
                 $sep, $request->first_name, $request->last_name, $request->yob, $request->mob
@@ -130,7 +138,7 @@ trait GeneratesKPIC
                     'last_name' => $request->last_name,
                     'yob' => $request->yob,
                     'mob' => $request->mob,
-                    'sep_id' => $request->sep_id,
+                    'sep_id' => $sep->id,
                     'duplicate_patient_ids' => json_encode($array)
                 ]);
                 $this->storeTrail($patient, $sep, 'Lookup', auth()->user());

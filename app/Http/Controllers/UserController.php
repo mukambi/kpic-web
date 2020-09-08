@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Notifications\UserRegisteredNotification;
+use App\Sep;
 use App\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -31,7 +32,8 @@ class UserController extends Controller
     {
         $this->authorize('create_system_users');
         return view('users.create', [
-            'roles' => Role::all()
+            'roles' => Role::all(),
+            'seps' => Sep::query()->orderBy('name')->get()
         ]);
     }
 
@@ -41,6 +43,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
+            'sep_id' => 'nullable|uuid'
         ]);
 
         DB::transaction(function () use ($request, &$password, &$user){
@@ -57,6 +60,11 @@ class UserController extends Controller
                 if($role){
                     $user->roles()->save($role);
                 }
+            }
+
+            if(!is_null($request->sep_id)){
+                $sep = Sep::query()->findOrFail($request->sep_id);
+                $sep->users()->save($user);
             }
         });
 

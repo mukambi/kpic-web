@@ -12,9 +12,6 @@
                     @can('create_sep')
                         <a href="{{ route('seps.create') }}" class="btn btn-primary">Add new Service Entry Point</a>
                     @endcan
-                    @can('view_system_users')
-                    <a href="{{ route('users.index') }}" class="btn btn-success">View System Users</a>
-                    @endcan
                 </div>
             </div>
         </div>

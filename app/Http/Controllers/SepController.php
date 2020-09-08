@@ -109,9 +109,14 @@ class SepController extends Controller
         DB::transaction(function () use ($request, $id){
             $sep = Sep::findOrFail($id);
             if(is_array($request->users) && count($request->users)){
-                $sep->users()->sync(array_keys($request->users));
+                $sep->users->each->update([
+                    'sep_id' => null
+                ]);
+                $sep->users()->saveMany(User::query()->whereIn('id', array_keys($request->users))->get());
             } else {
-                $sep->users()->sync([]);
+                $sep->users->each->update([
+                    'sep_id' => null
+                ]);
             }
         });
 
