@@ -22,7 +22,10 @@ class IndexController extends Controller
         $patients = [];
         $kpic_code = null;
         if($kpic_code = $request->get('code')){
-            $patients = Patient::with('sep')->where('kpic_code', $kpic_code)->get();
+            $patients = Patient::with('sep')
+                ->where('kpic_code', $kpic_code)
+                ->get();
+            $this->storeTrailsAndLookups($request, $patients);
         }
         return view('mobility.index', [
             'patients' => $patients,

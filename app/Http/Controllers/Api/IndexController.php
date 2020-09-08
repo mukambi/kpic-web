@@ -28,6 +28,7 @@ class IndexController extends Controller
             ->where('kpic_code', $kpic_code)
             ->where('icon_id', $request->icon)
             ->get();
+        $this->storeTrailsAndLookups($request, $patients);
         return response()->json($patients);
     }
 
