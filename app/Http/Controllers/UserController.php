@@ -69,7 +69,7 @@ class UserController extends Controller
         });
 
 //        $user->notify(new UserRegisteredNotification($password));
-        return redirect()->route('users.index')->with('success', 'You have successfully registered a new user. Username/Email: ' . $user->email . ', Password: ' . $user->password);
+        return redirect()->route('users.index')->with('success', 'You have successfully registered a new user. Username/Email: ' . $user->email . ', Password: ' . $password);
     }
 
     public function generateRandomString($length = 10) {
