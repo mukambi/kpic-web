@@ -22,11 +22,7 @@ class IndexController extends Controller
         $patients = [];
         $kpic_code = null;
         if($kpic_code = $request->get('code')){
-            $short_kpic_code = $this->getShortKPICCode($kpic_code);
-            if(is_null($short_kpic_code)){
-                return redirect()->back()->with('error', 'The KPIC Code is invalid.')->withInput();
-            }
-            $patients = Patient::with('sep')->where('short_kpic_code', $short_kpic_code)->get();
+            $patients = Patient::with('sep')->where('kpic_code', $kpic_code)->get();
         }
         return view('mobility.index', [
             'patients' => $patients,

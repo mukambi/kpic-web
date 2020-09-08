@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Patient extends Model
 {
     protected $fillable = [
-        'kpic_code', 'short_kpic_code', 'hash', 'sep_id', 'icon_id'
+        'kpic_code', 'sep_id', 'icon_id'
     ];
 
     public function pcn()

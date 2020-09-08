@@ -45,7 +45,7 @@ class IndexController extends Controller
     {
         $this->authorize('show_lookup_kpic');
         $patients = Patient::with('sep')
-            ->where('short_kpic_code', $code)
+            ->where('kpic_code', $code)
             ->where('icon_id', $icon_id)
             ->get();
         return view('lookup.show', [

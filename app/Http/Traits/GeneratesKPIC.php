@@ -7,18 +7,25 @@ use App\Icon;
 use App\Patient;
 use App\Sep;
 use App\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 trait GeneratesKPIC
 {
+    protected $kpicChars = [
+        "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+        "A", "B", "C", "D", "E", "F", "G", "H", "J", "K",
+        "L", "M", "N", "P", "Q", "R", "S", "T", "U", "V",
+        "W", "X", "Y", "Z"
+    ];
+
     public function createPatientRecord(Request $request)
     {
         $this->getValidate($request);
 
         DB::transaction(function () use ($request, &$patient) {
-            if(is_null($request->sep_id)){
+            if (is_null($request->sep_id)) {
                 $sep = $request->user()->sep;
             } else {
                 $sep = Sep::findOrFail($request->sep_id);
@@ -30,14 +37,15 @@ trait GeneratesKPIC
                 'icon_id' => $icon->id
             ]);
 
-            $kpic_code = $this->generateKPIC(
-                $patient, $sep, $request->first_name, $request->last_name, $request->yob, $request->mob, $icon
+            $concatenated_string = $this->generateConcatenation(
+               $sep, $request->first_name, $request->last_name, $request->yob, $request->mob
             );
 
+            $hash = $this->generateHash($concatenated_string);
+            $kpic_code = $this->KPICGenerator($hash);
+            $this->storeTrail($patient, $sep, 'Generated', $request->user());
             $patient->update([
-                'kpic_code' => $kpic_code['full_kpic_code'],
-                'hash' => Hash::make($kpic_code['full_kpic_code']),
-                'short_kpic_code' => $kpic_code['short_kpic_code']
+                'kpic_code' => $kpic_code
             ]);
         });
 
@@ -56,36 +64,14 @@ trait GeneratesKPIC
         ]);
     }
 
-    public function generateKPIC(Patient $patient, Sep $sep, string $first_name, string $last_name, int $yob, string $mob, Icon $icon): array
+    public function generateConcatenation(Sep $sep, string $first_name, string $last_name, int $yob, string $mob): string
     {
         $sep_code = $this->getSEPCode($sep);
         $user_data_code = $this->getUserDataCode($first_name, $last_name, $yob, $mob);
-        $icon_code = $this->getIconCode($icon);
-
-        $this->storeTrail($patient, $sep, 'Generated', auth()->user());
-        return [
-            'full_kpic_code' =>
-                (string)implode("-", [
-                    $sep_code,
-                    $user_data_code,
-                    $this->formatPatientId($patient),
-                    $icon_code
-                ]),
-            'short_kpic_code' =>
-                (string)implode("-", [
-                    $sep_code,
-                    $user_data_code
-                ])
-        ];
-    }
-
-    protected function getIconCode(Icon $icon): string
-    {
-        if(strlen($icon->code) <= 2){
-            return (string) sprintf("%02s", $icon->code);
-        }
-
-        return (string) strtoupper($icon->code)[0] . strtoupper($icon->code)[1];
+        return (string) implode("-", [
+            $sep_code,
+            $user_data_code
+        ]);
     }
 
     protected function getSEPCode(Sep $sep): string
@@ -95,12 +81,7 @@ trait GeneratesKPIC
 
     protected function getUserDataCode(string $first_name, string $last_name, int $yob, string $mob): string
     {
-        $f = strtoupper($first_name)[0];
-        $l = strtoupper($last_name)[0];
-        $cy = substr($yob, -2);
-        $cm = strtoupper($mob)[0];
-
-        return (string)$cm . $f . $l . $cy;
+        return (string)implode('|', [$first_name, $last_name, $yob, $mob]);
     }
 
     protected function storeTrail(Patient $patient, Sep $sep, $status, $user = null)
@@ -115,26 +96,50 @@ trait GeneratesKPIC
 
     protected function formatPatientId(Patient $patient)
     {
-        return (string) sprintf("%05d", $patient->id);
+        return (string)sprintf("%05d", $patient->id);
+    }
+
+    public function generateHash($kpic_code)
+    {
+        try {
+            return hash('sha256', $kpic_code);
+        } catch (Exception $exception) {
+            return null;
+        }
+    }
+
+    protected function KPICGenerator($hex_hash, $length = 8): string
+    {
+        $hash = (string) hexdec($hex_hash);
+        $buff = [];
+        for ($i = 0; $i < $length; $i++) {
+            $b = (int) $hash[$i];
+            if ($b < 0) $b += 256;
+            $idx = $b % count($this->kpicChars);
+            array_push($buff, $idx);
+        }
+        return (string)implode('', $buff);
     }
 
     public function lookupPatientRecord(Request $request)
     {
         $this->getValidate($request);
 
-        DB::transaction(function () use ($request, &$short_kpic_code) {
-            if(is_null($request->sep_id)){
+        DB::transaction(function () use ($request, &$kpic_code) {
+            if (is_null($request->sep_id)) {
                 $sep = $request->user()->sep;
             } else {
                 $sep = Sep::findOrFail($request->sep_id);
             }
 
-            $short_kpic_code = $this->generateShortKPIC(
+            $concatenated_string = $this->generateConcatenation(
                 $sep, $request->first_name, $request->last_name, $request->yob, $request->mob
             );
 
+            $hash = $this->generateHash($concatenated_string);
+            $kpic_code = $this->KPICGenerator($hash);
             $patients = Patient::query()
-                ->where('short_kpic_code', $short_kpic_code)
+                ->where('kpic_code', $kpic_code)
                 ->where('icon_id', $request->icon)
                 ->get();
 
@@ -151,27 +156,6 @@ trait GeneratesKPIC
             }
         });
 
-        return $short_kpic_code;
-    }
-
-    protected function generateShortKPIC(Sep $sep, string $first_name, string $last_name, int $yob, string $mob): string
-    {
-        return (string)implode("-", [
-            $this->getSEPCode($sep),
-            $this->getUserDataCode($first_name, $last_name, $yob, $mob)
-        ]);
-    }
-
-    public function getShortKPICCode($code)
-    {
-        $array_code = explode("-", $code);
-        switch (count($array_code)) {
-            case 4:
-                return implode('-', [$array_code[0], $array_code[1]]);
-            case 2:
-                return $code;
-            default:
-                return null;
-        }
+        return $kpic_code;
     }
 }

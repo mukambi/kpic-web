@@ -20,7 +20,6 @@ class KPICTableSeeder extends Seeder
     public function run()
     {
         $sep = Sep::first();
-        $pcn = Pcn::where('number', 9)->first();
 
         $first_name = 'Elizabeth';
         $last_name = 'Ageno';
@@ -46,14 +45,15 @@ class KPICTableSeeder extends Seeder
             'icon_id' => $icon->id
         ]);
 
-        $kpic_code = $this->generateKPIC(
-            $patient, $sep, $first_name, $last_name, $yob, $mob, $icon
+        $concatenated_string = $this->generateConcatenation(
+           $sep, $first_name, $last_name, $yob, $mob
         );
 
+        $hash = $this->generateHash($concatenated_string);
+        $kpic_code = $this->KPICGenerator($hash);
+        $this->storeTrail($patient, $sep, 'Generated');
         $patient->update([
-            'kpic_code' => $kpic_code['full_kpic_code'],
-            'hash' => Hash::make($kpic_code['full_kpic_code']),
-            'short_kpic_code' => $kpic_code['short_kpic_code']
+            'kpic_code' => $kpic_code,
         ]);
     }
 }

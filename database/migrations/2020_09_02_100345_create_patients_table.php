@@ -16,8 +16,6 @@ class CreatePatientsTable extends Migration
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
             $table->longText('kpic_code')->nullable();
-            $table->longText('short_kpic_code')->nullable();
-            $table->longText('hash')->nullable();
             $table->uuid('sep_id');
             $table->uuid('icon_id');
             $table->timestampsTz();
