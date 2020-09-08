@@ -5,6 +5,17 @@
 @endsection
 @section('content')
     @component('layouts.components.breadcrumbs',['name' => 'KPIC Code'])@endcomponent
+    <div class="row mb-3">
+        <div class="col-md-12">
+            @can('create_kpic')
+                @if(count($patients))
+                    <a href="{{ route('kpic.create') }}" class="btn btn-success">Generate KPIC</a>
+                @else
+                    <a href="{{ route('kpic.create') }}" class="btn btn-danger btn-block">Generate KPIC</a>
+                @endif
+            @endcan
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
