@@ -15,14 +15,6 @@
                     </a>
                 </li>
             @endcan
-            @can('view_seps')
-                <li class="nav-item {{ Route::is(['seps*']) ? 'active' : null }}" >
-                    <a class="nav-link" href="{{ route('seps.index') }}">
-                        <i class="link-icon" data-feather="map-pin"></i>
-                        <span class="menu-title">Service Entry Points</span>
-                    </a>
-                </li>
-            @endcan
             @can('view_system_users')
                 <li class="nav-item {{ Route::is(['users*']) ? 'active' : null }}" >
                     <a class="nav-link" href="{{ route('users.index') }}">
@@ -56,7 +48,7 @@
                 </li>
             @endcan
             @can('view_configurations')
-                <li class="nav-item {{ Route::is(['configuration.*']) ? 'active' : null }}">
+                <li class="nav-item {{ Route::is(['configuration.*', 'seps*']) ? 'active' : null }}">
                     <a href="javascript:void(0);" class="nav-link">
                         <i class="link-icon" data-feather="settings"></i>
                         <span class="menu-title">Configurations</span>
@@ -64,6 +56,13 @@
                     </a>
                     <div class="submenu">
                         <ul class="submenu-item">
+                            @can('view_seps')
+                                <li class="nav-item">
+                                    <a class="nav-link {{ Route::is(['seps*']) ? 'active' : null }}" href="{{ route('seps.index') }}">
+                                        Service Entry Points
+                                    </a>
+                                </li>
+                            @endcan
                             @can('view_sep_types')
                                 <li class="nav-item">
                                     <a class="nav-link {{ Route::is(['configuration.sep-type.*']) ? 'active' : null }}" href="{{ route('configuration.sep-type.index') }}">
