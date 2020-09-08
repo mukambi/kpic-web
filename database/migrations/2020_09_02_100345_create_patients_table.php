@@ -18,10 +18,6 @@ class CreatePatientsTable extends Migration
             $table->longText('kpic_code')->nullable();
             $table->longText('short_kpic_code')->nullable();
             $table->longText('hash')->nullable();
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->integer('yob');
-            $table->string('mob');
             $table->uuid('sep_id');
             $table->uuid('icon_id');
             $table->timestampsTz();

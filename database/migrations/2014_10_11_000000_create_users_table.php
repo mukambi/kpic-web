@@ -19,8 +19,14 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->uuid('sep_id')->nullable();
             $table->rememberToken();
             $table->timestampsTz();
+
+            $table->foreign('sep_id')
+                ->references('id')
+                ->on('seps')
+                ->onDelete('cascade');
         });
     }
 

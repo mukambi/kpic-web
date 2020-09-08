@@ -10,7 +10,7 @@ class Icon extends Model
     use UsesUuid;
 
     protected $fillable = [
-        'name', 'image_url'
+        'name', 'image_url', 'code'
     ];
 
     protected $appends = [

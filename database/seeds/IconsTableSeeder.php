@@ -18,6 +18,7 @@ class IconsTableSeeder extends Seeder
 
         foreach ($icons as $icon){
             Icon::create([
+                'code' => $icon->code,
                 'name' => $icon->name,
                 'image_url' => $icon->image_url
             ]);

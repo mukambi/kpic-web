@@ -17,11 +17,8 @@ class CreateLookupsTable extends Migration
             $table->uuid('id')->primary();
             $table->unsignedBigInteger('patient_id')->nullable();
             $table->json('duplicate_patient_ids')->nullable();
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->integer('yob');
-            $table->string('mob');
             $table->uuid('sep_id');
+            $table->uuid('user_id');
             $table->timestampsTz();
 
             $table->foreign('patient_id')
