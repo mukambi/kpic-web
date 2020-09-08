@@ -23,8 +23,11 @@ class IndexController extends Controller
     public function lookup(Request $request)
     {
         $this->authorize('api_lookup_kpic');
-        $short_kpic_code = $this->lookupPatientRecord($request);
-        $patients = Patient::with('sep')->where('short_kpic_code', $short_kpic_code)->get();
+        $kpic_code = $this->lookupPatientRecord($request);
+        $patients = Patient::with('sep')
+            ->where('kpic_code', $kpic_code)
+            ->where('icon_id', $request->icon)
+            ->get();
         return response()->json($patients);
     }
 
