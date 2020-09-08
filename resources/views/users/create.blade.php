@@ -69,7 +69,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-actions text-right border-top">
+                        <div class="form-actions text-right border-top mt-4">
                             <div class="mt-2">
                                 <button type="reset" class="btn btn-warning mr-1">
                                     <i class="ft-x"></i> Cancel
