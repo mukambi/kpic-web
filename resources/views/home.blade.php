@@ -1,23 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
-                </div>
-            </div>
+    <div class="row">
+        <div class="col-md-4">
+            <a href="{{ route('kpic.create') }}" class="btn btn-large btn-success btn-block" style="height: 100px;">
+                <span class="text-right" style="font-size: 50px;">Generate</span>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="{{ route('lookup.create') }}" class="btn btn-large btn-success btn-block" style="height: 100px;">
+                <span class="text-right" style="font-size: 50px;">Lookup</span>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="{{ route('kpic.index') }}" class="btn btn-large btn-success btn-block" style="height: 100px;">
+                <span class="text-right" style="font-size: 50px;">List</span>
+            </a>
         </div>
     </div>
-</div>
 @endsection
