@@ -1,0 +1,16 @@
+[
+  {
+    "name": "manager",
+    "permissions" : [
+      "view_kpics",
+      "create_kpic",
+      "lookup_kpic",
+      "show_lookup_kpic",
+      "view_dedup_reports",
+      "view_system_users",
+      "create_system_users",
+      "view_mobility_list",
+      "view_kpic_list"
+    ]
+  }
+]

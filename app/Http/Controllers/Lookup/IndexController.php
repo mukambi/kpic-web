@@ -34,9 +34,9 @@ class IndexController extends Controller
     public function search(Request $request)
     {
         $this->authorize('lookup_kpic');
-        $short_kpic_code = $this->lookupPatientRecord($request);
+        $kpic_code = $this->lookupPatientRecord($request);
         return redirect()->route('lookup.show', [
-            'code' => (string) $short_kpic_code,
+            'code' => (string) $kpic_code,
             'icon_id' => (string) $request->icon
         ]);
     }

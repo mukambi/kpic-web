@@ -26,19 +26,19 @@ trait GeneratesKPIC
         $this->getValidate($request);
 
         DB::transaction(function () use ($request, &$patient) {
+            $icon = Icon::query()->findOrFail($request->icon);
+            $concatenated_string = $this->generateConcatenation(
+                $request->surname, $request->first_name, $request->second_name, $request->yob, $request->mob
+            );
+            $hash = $this->generateHash($concatenated_string);
+            $kpic_code = $this->KPICGenerator($hash);
+            $this->checkForDuplicates($kpic_code, $icon);
+
             if (is_null($request->sep_id)) {
                 $sep = $request->user()->sep;
             } else {
                 $sep = Sep::findOrFail($request->sep_id);
             }
-
-            $icon = Icon::query()->findOrFail($request->icon);
-            $concatenated_string = $this->generateConcatenation(
-                $sep, $request->surname, $request->first_name, $request->second_name, $request->yob, $request->mob
-            );
-            $hash = $this->generateHash($concatenated_string);
-            $kpic_code = $this->KPICGenerator($hash);
-            $this->checkForDuplicates($kpic_code, $icon);
             $patient = Patient::create([
                 'sep_id' => $sep->id,
                 'icon_id' => $icon->id,
@@ -48,6 +48,18 @@ trait GeneratesKPIC
         });
 
         return $patient;
+    }
+
+    public function getValidateLookup(Request $request): void
+    {
+        $request->validate([
+            'surname' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'second_name' => 'nullable|string|max:255',
+            'yob' => 'required|integer|max:' . date('Y'),
+            'mob' => 'nullable|string|max:255',
+            'icon' => 'required|uuid'
+        ]);
     }
 
     public function getValidate(Request $request): void
@@ -63,13 +75,11 @@ trait GeneratesKPIC
         ]);
     }
 
-    public function generateConcatenation(Sep $sep, string $surname, string $first_name, $second_name, int $yob, string $mob): string
+    public function generateConcatenation(string $surname, string $first_name, $second_name, int $yob, string $mob): string
     {
         if (is_null($second_name)) $second_name = '0000';
-        $sep_code = $this->getSEPCode($sep);
         $user_data_code = $this->getUserDataCode($surname, $first_name, $second_name, $yob, $mob);
         return (string)implode("-", [
-            $sep_code,
             $user_data_code
         ]);
     }
@@ -132,17 +142,11 @@ trait GeneratesKPIC
 
     public function lookupPatientRecord(Request $request)
     {
-        $this->getValidate($request);
+        $this->getValidateLookup($request);
 
         DB::transaction(function () use ($request, &$kpic_code) {
-            if (is_null($request->sep_id)) {
-                $sep = $request->user()->sep;
-            } else {
-                $sep = Sep::findOrFail($request->sep_id);
-            }
-
             $concatenated_string = $this->generateConcatenation(
-                $sep, $request->surname, $request->first_name, $request->second_name, $request->yob, $request->mob
+                $request->surname, $request->first_name, $request->second_name, $request->yob, $request->mob
             );
 
             $hash = $this->generateHash($concatenated_string);
@@ -158,10 +162,10 @@ trait GeneratesKPIC
                 })->pluck('id')->toArray();
                 $patient->lookups()->create([
                     'user_id' => $request->user()->id,
-                    'sep_id' => $sep->id,
+                    'sep_id' => $patient->sep->id,
                     'duplicate_patient_ids' => json_encode($array)
                 ]);
-                $this->storeTrail($patient, $sep, 'Lookup', auth()->user());
+                $this->storeTrail($patient, $patient->sep, 'Lookup', auth()->user());
             }
         });
 

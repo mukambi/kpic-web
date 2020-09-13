@@ -18,26 +18,6 @@
                             <div class="col-12 my-2">
                                 <h3 class="border-bottom border-primary">User information</h3>
                             </div>
-                            @if(is_null(auth()->user()->sep_id))
-                                <div class="col-12">
-                                    <label for="sep_id">{{ __('Service Entry Point') }}
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    <select name="sep_id" id="sep_id" class="form-control @error('sep_id') is-invalid @enderror" required>
-                                        <option {{ old('sep_id') ? null : "selected" }} disabled>Select Service Entry Point</option>
-                                        @foreach($seps as $sep)
-                                            <option
-                                                {{ old('sep_id') && (old('sep_id') == $sep->id) ? "selected" : null }}
-                                                value="{{ $sep->id }}">{{ ucwords(strtolower($sep->name)) }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('sep_id')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            @endif
                         </div>
                         <div class="row">
                             <div class="col-4">

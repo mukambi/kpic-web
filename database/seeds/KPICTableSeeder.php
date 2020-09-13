@@ -40,7 +40,7 @@ class KPICTableSeeder extends Seeder
     {
         $icon = Icon::orderBy('name')->limit(4)->first();
         $concatenated_string = $this->generateConcatenation(
-            $sep, $surname, $first_name, $second_name, $yob, $mob
+            $surname, $first_name, $second_name, $yob, $mob
         );
 
         $hash = $this->generateHash($concatenated_string);
