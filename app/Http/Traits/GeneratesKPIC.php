@@ -82,11 +82,11 @@ trait GeneratesKPIC
     protected function getUserDataCode(string $surname, string $first_name, $second_name, int $yob, string $mob): string
     {
         return (string)implode('|', [
-            strtolower($surname),
-            strtolower($first_name),
-            strtolower($second_name),
+            strtoupper($surname),
+            strtoupper($first_name),
+            strtoupper($second_name),
             $yob,
-            strtolower($mob)
+            strtoupper($mob)
         ]);
     }
 
