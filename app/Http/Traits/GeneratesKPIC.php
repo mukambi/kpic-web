@@ -65,7 +65,7 @@ trait GeneratesKPIC
 
     public function generateConcatenation(Sep $sep, string $surname, string $first_name, $second_name, int $yob, string $mob): string
     {
-        if(is_null($second_name)) $second_name = 0000;
+        if (is_null($second_name)) $second_name = '0000';
         $sep_code = $this->getSEPCode($sep);
         $user_data_code = $this->getUserDataCode($surname, $first_name, $second_name, $yob, $mob);
         return (string)implode("-", [
@@ -81,7 +81,13 @@ trait GeneratesKPIC
 
     protected function getUserDataCode(string $surname, string $first_name, $second_name, int $yob, string $mob): string
     {
-        return (string)implode('|', [$surname, $first_name, $second_name, $yob, $mob]);
+        return (string)implode('|', [
+            strtolower($surname),
+            strtolower($first_name),
+            strtolower($second_name),
+            $yob,
+            strtolower($mob)
+        ]);
     }
 
     public function generateHash($kpic_code)
@@ -97,7 +103,7 @@ trait GeneratesKPIC
     {
         $buff = [];
         for ($i = 0; $i < $length; $i++) {
-            $b = (int) hexdec($hash[$i]);
+            $b = (int)hexdec($hash[$i]);
             if ($b < 0) $b += 256;
             $idx = (int)$b % count($this->kpicChars);
             array_push($buff, $this->kpicChars[$idx]);
