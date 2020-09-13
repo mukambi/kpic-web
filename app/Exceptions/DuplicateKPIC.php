@@ -36,6 +36,6 @@ class DuplicateKPIC extends Exception
             ], 400);
         }
 
-        return redirect()->back()->with('error', $this->getMessage());
+        return redirect()->back()->with('error', $this->getMessage())->withInput();
     }
 }
