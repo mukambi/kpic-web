@@ -3,6 +3,7 @@
 namespace App\Http\Traits;
 
 use App\AuditTrail;
+use App\Exceptions\DuplicateKPIC;
 use App\Icon;
 use App\Patient;
 use App\Sep;
@@ -32,24 +33,30 @@ trait GeneratesKPIC
             }
 
             $icon = Icon::query()->findOrFail($request->icon);
-            $patient = Patient::create([
-                'sep_id' => $sep->id,
-                'icon_id' => $icon->id
-            ]);
-
             $concatenated_string = $this->generateConcatenation(
-               $sep, $request->first_name, $request->last_name, $request->yob, $request->mob
+                $sep, $request->first_name, $request->last_name, $request->yob, $request->mob
             );
-
             $hash = $this->generateHash($concatenated_string);
             $kpic_code = $this->KPICGenerator($hash);
-            $this->storeTrail($patient, $sep, 'Generated', $request->user());
-            $patient->update([
+            $this->checkForDuplicates($kpic_code, $icon);
+            $patient = Patient::create([
+                'sep_id' => $sep->id,
+                'icon_id' => $icon->id,
                 'kpic_code' => $kpic_code
             ]);
+            $this->storeTrail($patient, $sep, 'Generated', $request->user());
         });
 
         return $patient;
+    }
+
+    protected function checkForDuplicates($kpic_code, Icon $icon)
+    {
+        $patients = Patient::query()
+            ->where('kpic_code', $kpic_code)
+            ->where('icon_id', $icon->id)
+            ->get();
+        if(count($patients)) throw new DuplicateKPIC('Duplicate KPIC Found! Please resubmit with a new icon selected');
     }
 
     public function getValidate(Request $request): void
