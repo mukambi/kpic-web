@@ -40,26 +40,36 @@
                             @endif
                         </div>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-4">
+                                <label for="surname">{{ __('Surname') }}
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" class="form-control @error('surname') is-invalid @enderror"
+                                       id="surname" name="surname" value="{{ old('surname') }}" required>
+                                @error('surname')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="col-4">
                                 <label for="first_name">{{ __('First Name') }}
                                     <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" class="form-control @error('first_name') is-invalid @enderror"
                                        id="first_name" name="first_name" value="{{ old('first_name') }}" required>
                                 @error('first_name')
-                                    <span class="invalid-feedback" role="alert">
+                                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
-                            <div class="col-6">
-                                <label for="last_name">{{ __('Last Name') }}
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <input type="text" class="form-control @error('last_name') is-invalid @enderror"
-                                       id="last_name" name="last_name" value="{{ old('last_name') }}" required>
-                                @error('last_name')
-                                    <span class="invalid-feedback" role="alert">
+                            <div class="col-4">
+                                <label for="second_name">{{ __('Second Name') }}</label>
+                                <input type="text" class="form-control @error('second_name') is-invalid @enderror"
+                                       id="second_name" name="second_name" value="{{ old('second_name') }}">
+                                @error('second_name')
+                                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror

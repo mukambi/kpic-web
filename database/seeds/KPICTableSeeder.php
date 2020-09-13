@@ -3,10 +3,8 @@
 use App\Http\Traits\GeneratesKPIC;
 use App\Icon;
 use App\Patient;
-use App\Pcn;
 use App\Sep;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class KPICTableSeeder extends Seeder
 {
@@ -21,39 +19,37 @@ class KPICTableSeeder extends Seeder
     {
         $sep = Sep::first();
 
+        $surname = 'Ageno';
         $first_name = 'Elizabeth';
-        $last_name = 'Ageno';
+        $second_name = null;
         $yob = 1980;
         $mob = 'April';
 
-        $this->generatedSeedKPIC($sep, $first_name, $last_name, $yob, $mob);
+        $this->generatedSeedKPIC($sep, $surname, $first_name, $second_name, $yob, $mob);
 
+        $surname = 'Agatha';
         $first_name = 'Ezra';
-        $last_name = 'Agatha';
+        $second_name = null;
         $yob = 1980;
         $mob = 'April';
 
-        $this->generatedSeedKPIC($sep, $first_name, $last_name, $yob, $mob);
+        $this->generatedSeedKPIC($sep, $surname, $first_name, $second_name, $yob, $mob);
     }
 
-    public function generatedSeedKPIC($sep, $first_name, $last_name, $yob, $mob)
+    public function generatedSeedKPIC($sep, $surname, $first_name, $second_name, $yob, $mob)
     {
         $icon = Icon::orderBy('name')->limit(4)->first();
-
-        $patient = Patient::create([
-            'sep_id' => $sep->id,
-            'icon_id' => $icon->id
-        ]);
-
         $concatenated_string = $this->generateConcatenation(
-           $sep, $first_name, $last_name, $yob, $mob
+            $sep, $surname, $first_name, $second_name, $yob, $mob
         );
 
         $hash = $this->generateHash($concatenated_string);
         $kpic_code = $this->KPICGenerator($hash);
-        $this->storeTrail($patient, $sep, 'Generated');
-        $patient->update([
+        $patient = Patient::create([
+            'sep_id' => $sep->id,
+            'icon_id' => $icon->id,
             'kpic_code' => $kpic_code,
         ]);
+        $this->storeTrail($patient, $sep, 'Generated');
     }
 }

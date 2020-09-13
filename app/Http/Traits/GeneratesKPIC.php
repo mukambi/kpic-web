@@ -34,7 +34,7 @@ trait GeneratesKPIC
 
             $icon = Icon::query()->findOrFail($request->icon);
             $concatenated_string = $this->generateConcatenation(
-                $sep, $request->first_name, $request->last_name, $request->yob, $request->mob
+                $sep, $request->surname, $request->first_name, $request->second_name, $request->yob, $request->mob
             );
             $hash = $this->generateHash($concatenated_string);
             $kpic_code = $this->KPICGenerator($hash);
@@ -50,32 +50,25 @@ trait GeneratesKPIC
         return $patient;
     }
 
-    protected function checkForDuplicates($kpic_code, Icon $icon)
-    {
-        $patients = Patient::query()
-            ->where('kpic_code', $kpic_code)
-            ->where('icon_id', $icon->id)
-            ->get();
-        if(count($patients)) throw new DuplicateKPIC('Duplicate KPIC Found! Please resubmit with a new icon selected');
-    }
-
     public function getValidate(Request $request): void
     {
         $request->validate([
             'sep_id' => 'nullable|uuid',
+            'surname' => 'required|string|max:255',
             'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
+            'second_name' => 'nullable|string|max:255',
             'yob' => 'required|integer|max:' . date('Y'),
             'mob' => 'nullable|string|max:255',
             'icon' => 'required|uuid'
         ]);
     }
 
-    public function generateConcatenation(Sep $sep, string $first_name, string $last_name, int $yob, string $mob): string
+    public function generateConcatenation(Sep $sep, string $surname, string $first_name, $second_name, int $yob, string $mob): string
     {
+        if(is_null($second_name)) $second_name = 0000;
         $sep_code = $this->getSEPCode($sep);
-        $user_data_code = $this->getUserDataCode($first_name, $last_name, $yob, $mob);
-        return (string) implode("-", [
+        $user_data_code = $this->getUserDataCode($surname, $first_name, $second_name, $yob, $mob);
+        return (string)implode("-", [
             $sep_code,
             $user_data_code
         ]);
@@ -86,24 +79,9 @@ trait GeneratesKPIC
         return (string)$sep->code . $sep->type->code;
     }
 
-    protected function getUserDataCode(string $first_name, string $last_name, int $yob, string $mob): string
+    protected function getUserDataCode(string $surname, string $first_name, $second_name, int $yob, string $mob): string
     {
-        return (string)implode('|', [$first_name, $last_name, $yob, $mob]);
-    }
-
-    protected function storeTrail(Patient $patient, Sep $sep, $status, $user = null)
-    {
-        AuditTrail::create([
-            'sep_id' => $sep->id,
-            'patient_id' => $patient->id,
-            'user_id' => $user ? $user->id : User::first()->id,
-            'action' => $status
-        ]);
-    }
-
-    protected function formatPatientId(Patient $patient)
-    {
-        return (string)sprintf("%05d", $patient->id);
+        return (string)implode('|', [$surname, $first_name, $second_name, $yob, $mob]);
     }
 
     public function generateHash($kpic_code)
@@ -115,17 +93,35 @@ trait GeneratesKPIC
         }
     }
 
-    protected function KPICGenerator($hex_hash, $length = 8): string
+    protected function KPICGenerator($hash, $length = 9): string
     {
-        $hash = (string) hexdec($hex_hash);
         $buff = [];
         for ($i = 0; $i < $length; $i++) {
-            $b = (int) $hash[$i];
+            $b = (int) hexdec($hash[$i]);
             if ($b < 0) $b += 256;
-            $idx = $b % count($this->kpicChars);
-            array_push($buff, $idx);
+            $idx = (int)$b % count($this->kpicChars);
+            array_push($buff, $this->kpicChars[$idx]);
         }
         return (string)implode('', $buff);
+    }
+
+    protected function checkForDuplicates($kpic_code, Icon $icon)
+    {
+        $patients = Patient::query()
+            ->where('kpic_code', $kpic_code)
+            ->where('icon_id', $icon->id)
+            ->get();
+        if (count($patients)) throw new DuplicateKPIC('Duplicate KPIC Found! Please resubmit with a new icon selected');
+    }
+
+    protected function storeTrail(Patient $patient, Sep $sep, $status, $user = null)
+    {
+        AuditTrail::create([
+            'sep_id' => $sep->id,
+            'patient_id' => $patient->id,
+            'user_id' => $user ? $user->id : User::first()->id,
+            'action' => $status
+        ]);
     }
 
     public function lookupPatientRecord(Request $request)
@@ -140,7 +136,7 @@ trait GeneratesKPIC
             }
 
             $concatenated_string = $this->generateConcatenation(
-                $sep, $request->first_name, $request->last_name, $request->yob, $request->mob
+                $sep, $request->surname, $request->first_name, $request->second_name, $request->yob, $request->mob
             );
 
             $hash = $this->generateHash($concatenated_string);
@@ -169,8 +165,8 @@ trait GeneratesKPIC
     public function storeTrailsAndLookups(Request $request, $patients)
     {
         $auth = $request->user();
-        if($auth->sep_id){
-            $patients->each(function ($patient) use ($auth, $patients){
+        if ($auth->sep_id) {
+            $patients->each(function ($patient) use ($auth, $patients) {
                 $array = collect($patients)->reject(function ($p) use ($patient) {
                     return $p->id == $patient->id;
                 })->pluck('id')->toArray();
@@ -183,7 +179,7 @@ trait GeneratesKPIC
                 $this->storeTrail($patient, $sep, 'Lookup', $auth);
             });
         } else {
-            $patients->each(function ($patient) use ($auth, $patients){
+            $patients->each(function ($patient) use ($auth, $patients) {
                 $array = collect($patients)->reject(function ($p) use ($patient) {
                     return $p->id == $patient->id;
                 })->pluck('id')->toArray();
@@ -196,5 +192,10 @@ trait GeneratesKPIC
                 $this->storeTrail($patient, $sep, 'Lookup', $auth);
             });
         }
+    }
+
+    protected function formatPatientId(Patient $patient)
+    {
+        return (string)sprintf("%05d", $patient->id);
     }
 }
