@@ -47,7 +47,6 @@
                                 <th>Time</th>
                                 <th>Date</th>
                                 <th>Service Entry Point</th>
-                                <th>Actions</th>
                             </tr>
                             </thead>
                             <tfoot>
@@ -56,7 +55,6 @@
                                 <th>Time</th>
                                 <th>Date</th>
                                 <th>Service Entry Point</th>
-                                <th>Actions</th>
                             </tr>
                             </tfoot>
                             <tbody>
@@ -66,9 +64,6 @@
                                     <td>{{ $patient->created_at->format('g:i a') }}</td>
                                     <td>{!! $patient->created_at->format('j<\s\up>S</\s\up> F Y') !!}</td>
                                     <td>{{ $patient->sep->name }}</td>
-                                    <td>
-
-                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>
