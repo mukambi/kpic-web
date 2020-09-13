@@ -16,7 +16,7 @@
                         @csrf
                         @method('PATCH')
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-6">
                                 <label for="name">{{ __('Name') }}
                                     <span class="text-danger">*</span>
                                 </label>
@@ -28,36 +28,19 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col-6">
-                                <label for="code">{{ __('Facility Code') }}
-                                    <span class="text-danger">*</span>
-                                </label>
+                                <label for="code">{{ __('Facility Code') }}</label>
                                 <input type="number" class="form-control @error('code') is-invalid @enderror"
-                                       id="code" name="code" value="{{ old('code') ?: $sep->code }}" required>
+                                       id="code" name="code" value="{{ old('code') ?: $sep->code }}">
                                 @error('code')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
-                            <div class="col-6">
-                                <label for="location">{{ __('Location') }}
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <input type="text" class="form-control @error('location') is-invalid @enderror"
-                                       id="location" name="location" value="{{ old('location') ?: $sep->location }}" required>
-                                @error('location')
-                                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
                         </div>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-12">
                                 <label for="type_id">{{ __('Type') }}
                                     <span class="text-danger">*</span>
                                 </label>
@@ -73,18 +56,6 @@
                                 </select>
                                 @error('type_id')
                                 <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                            <div class="col-6">
-                                <label for="geocode">{{ __('Geocode') }}
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <input type="text" class="form-control @error('geocode') is-invalid @enderror"
-                                       id="geocode" name="geocode" value="{{ old('geocode') ?: $sep->geocode }}">
-                                @error('geocode')
-                                    <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror

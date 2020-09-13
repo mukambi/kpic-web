@@ -28,35 +28,29 @@
                         <table class="table seps">
                             <thead>
                             <tr>
-                                <th>Location</th>
                                 <th>Name</th>
                                 <th>Code</th>
                                 <th>Type</th>
                                 <th>Users</th>
-                                <th>Geocode</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
                             <tfoot>
                             <tr>
-                                <th>Location</th>
                                 <th>Name</th>
                                 <th>Code</th>
                                 <th>Type</th>
                                 <th>Users</th>
-                                <th>Geocode</th>
                                 <th>Actions</th>
                             </tr>
                             </tfoot>
                             <tbody>
                             @foreach($seps as $sep)
                                 <tr>
-                                    <td>{{ $sep->location }}</td>
                                     <td>{{ $sep->name }}</td>
-                                    <td>{{ $sep->code }}</td>
+                                    <td>{{ $sep->code ?: 'N/A' }}</td>
                                     <td>{{ $sep->type->name }}</td>
                                     <td>{{ $sep->users->count() }}</td>
-                                    <td>{{ $sep->geocode ?: 'N/A' }}</td>
                                     <td>
                                         @can('edit_sep')
                                             <a href="{{ route('seps.edit', ['id' => $sep->id]) }}" class="btn btn-primary">Edit Service Entry point</a>

@@ -36,20 +36,16 @@ class SepController extends Controller
     {
         $this->authorize('create_sep');
         $request->validate([
-            'location' => 'required|string|max:255',
-            'code' => 'required|integer|unique:seps',
+            'code' => 'nullable|integer|unique:seps',
             'name' => 'required|string|max:255',
-            'type_id' => 'required|uuid',
-            'geocode' => 'nullable|string'
+            'type_id' => 'required|uuid'
         ]);
 
         DB::transaction(function () use ($request) {
             Sep::create([
-                'location' => $request->location,
                 'name' => $request->name,
                 'code' => $request->code,
-                'type_id' => $request->type_id,
-                'geocode' => $request->geocode
+                'type_id' => $request->type_id
             ]);
         });
 
@@ -72,20 +68,16 @@ class SepController extends Controller
         $this->authorize('edit_sep');
         $sep = Sep::findOrFail($id);
         $request->validate([
-            'location' => 'required|string|max:255',
-            'code' => ['required', 'integer', Rule::unique('seps')->ignore($sep->id)],
+            'code' => ['nullable', 'integer', Rule::unique('seps')->ignore($sep->id)],
             'name' => 'required|string|max:255',
-            'type_id' => 'required|uuid',
-            'geocode' => 'nullable|string'
+            'type_id' => 'required|uuid'
         ]);
 
         DB::transaction(function () use ($request, $sep) {
             $sep->update([
-                'location' => $request->location,
                 'name' => $request->name,
                 'code' => $request->code,
-                'type_id' => $request->type_id,
-                'geocode' => $request->geocode
+                'type_id' => $request->type_id
             ]);
         });
 

@@ -15,7 +15,7 @@ class Sep extends Model
      * @var array
      */
     protected $fillable = [
-        'location', 'name', 'code', 'type_id', 'geocode'
+        'name', 'code', 'type_id'
     ];
 
     public function users()
