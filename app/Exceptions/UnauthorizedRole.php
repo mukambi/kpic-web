@@ -29,11 +29,12 @@ class UnauthorizedRole extends Exception
      */
     public function render(Request $request)
     {
-        if ($request->ajax()) {
+        if ($request->wantsJson()) {
             return response()->json([
                 'message' => $this->getMessage()
             ]);
         }
+
         throw new AccessDeniedException($this->getMessage());
     }
 }
