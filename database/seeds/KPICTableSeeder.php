@@ -4,6 +4,7 @@ use App\Http\Traits\GeneratesKPIC;
 use App\Icon;
 use App\Patient;
 use App\Sep;
+use App\User;
 use Illuminate\Database\Seeder;
 
 class KPICTableSeeder extends Seeder
@@ -38,6 +39,7 @@ class KPICTableSeeder extends Seeder
 
     public function generatedSeedKPIC($sep, $surname, $first_name, $second_name, $yob, $mob)
     {
+        $admin = User::query()->where('email', 'admin@example.com')->first();
         $icon = Icon::orderBy('name')->limit(4)->first();
         $concatenated_string = $this->generateConcatenation(
             $surname, $first_name, $second_name, $yob, $mob
@@ -49,7 +51,8 @@ class KPICTableSeeder extends Seeder
             'sep_id' => $sep->id,
             'icon_id' => $icon->id,
             'kpic_code' => $kpic_code,
-            'possible_duplicate' => false
+            'possible_duplicate' => false,
+            'creator_id' => $admin->id
         ]);
         $this->storeTrail($patient, $sep, 'Generated');
     }

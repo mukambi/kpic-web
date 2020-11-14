@@ -50,4 +50,12 @@ class User extends Authenticatable implements MustVerifyEmail
             'sep_id'
         );
     }
+
+    public function patients()
+    {
+        return $this->hasMany(
+            Patient::class,
+            'creator_id'
+        );
+    }
 }

@@ -43,6 +43,7 @@ trait GeneratesKPIC
                 'sep_id' => $sep->id,
                 'icon_id' => $icon->id,
                 'kpic_code' => $kpic_code,
+                'creator_id' => auth()->id(),
                 'possible_duplicate' => $request->possible_duplicate == 'true'
             ]);
             $this->storeTrail($patient, $sep, 'Generated', $request->user());
@@ -125,11 +126,13 @@ trait GeneratesKPIC
 
     protected function checkForDuplicates($kpic_code, Icon $icon)
     {
-        $patients = Patient::query()
+        $patient = Patient::query()
             ->where('kpic_code', $kpic_code)
             ->where('icon_id', $icon->id)
-            ->get();
-        if (count($patients)) throw new DuplicateKPIC('Duplicate KPIC Found! Please resubmit with a new icon selected');
+            ->first();
+
+        if ($patient)
+            throw new DuplicateKPIC($patient->id);
     }
 
     protected function storeTrail(Patient $patient, Sep $sep, $status, $user = null)

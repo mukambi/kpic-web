@@ -1,80 +1,85 @@
 @extends('layouts.app')
 @section('css')
     @parent
-    <link rel="stylesheet" href="{{ asset('/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css') }}">
 @endsection
 @section('content')
     @component('layouts.components.breadcrumbs',['name' => 'KPIC Code'])@endcomponent
-    <div class="row mb-3">
-        <div class="col-md-12">
-            @can('create_kpic')
-                @if(count($patients))
-                    <a href="{{ route('list.kpic.create') }}" class="btn btn-success">Generate KPIC</a>
-                @else
-                    <a href="{{ route('list.kpic.create') }}" class="btn btn-danger btn-block">Generate KPIC</a>
-                @endif
-            @endcan
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 grid-margin stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <h6 class="card-title">All KPIC codes</h6>
-                    <p class="card-description">
-                        Below is a list of all KPIC.
-                    </p>
-                    <div class="table-responsive">
-                        <table class="table questions">
-                            <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>KPIC Code</th>
-                                <th>Service Entry Point</th>
-                                <th>Actions</th>
-                            </tr>
-                            </thead>
-                            <tfoot>
-                            <tr>
-                                <th>#</th>
-                                <th>KPIC Code</th>
-                                <th>Service Entry Point</th>
-                                <th>Actions</th>
-                            </tr>
-                            </tfoot>
-                            <tbody>
-                            @foreach($patients as $patient)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>
-                                        <code>{{ $patient->kpic_code }}</code>
-                                    </td>
-                                    <td>{{ $patient->sep->name }}</td>
-                                    <td>
-
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+    <x-kpic-buttons/>
+    @if($patient)
+        <div class="row">
+            <div class="col-md-12 mb-3">
+                <div class="card bd-dark bg-success">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="text-center">
+                                    <h4 class="mb-4">Success! KPIC FOUND</h4>
+                                    <h1><strong>{{ $patient->kpic_code }}</strong></h1>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="bg-white text-center">
+                                    <img src="{{ $patient->icon->asset_url }}" height="150"
+                                         alt="test">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>
+                                    <strong>Created:</strong> {{ ucwords(strtolower($patient->sep->name)) }}
+                                </p>
+                                <p>
+                                    <strong>Created By:</strong> {{ ucwords(strtolower($patient->creator->name)) }}
+                                </p>
+                                <p>
+                                    <strong>Created
+                                        On:</strong> {!! $patient->created_at->format('j<\s\up>S</\s\up> F Y')  !!}
+                                    at {{ $patient->created_at->format('g:i a') }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body bg-white">
+                        <p class="pt-2">
+                            Not the right person? Click on
+                            <a href="{{ route('list.lookup.create') }}" class="text-body"><strong>[Search]</strong></a>
+                            and make sure to spell the names <strong>exactly</strong> as they were originally entered
+                            and
+                            <strong>select the same icon original selected</strong>.
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    @else
+        <div class="row">
+            <div class="col-md-12 mb-3">
+                <div class="card bd-dark bg-danger">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="text-center">
+                                    <h4 class="mb-4">KPIC not found</h4>
+                                </div>
+                                <p class="pt-2">
+                                    If you are certain a KPIC has been generated, click on Search and make sure to spell
+                                    the
+                                    names <strong>exactly</strong> as they were originally entered and select the
+                                    <strong>same icon originally selected</strong>.
+                                </p>
+                                <p class="pt-2">
+                                    If you still cannot find the KPIC, generate a new KPIC and mark "potential
+                                    duplicate" box.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 @endsection
 @section('js')
     @parent
-    <script src="{{ asset('/assets/vendors/datatables.net/jquery.dataTables.js') }}"></script>
-    <script src="{{ asset('/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.js') }}"></script>
-    <script>
-        $(document).ready(function () {
-            $(".questions").DataTable({
-                "language": {
-                    "emptyTable": "No KPIC found."
-                },
-                "lengthMenu": @json(config('settings.pagination_length')),
-            })
-        });
-    </script>
 @endsection

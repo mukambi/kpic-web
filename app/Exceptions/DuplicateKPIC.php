@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Patient;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -32,10 +33,10 @@ class DuplicateKPIC extends Exception
     {
         if ($request->wantsJson()) {
             return response()->json([
-                'message' => $this->getMessage()
+                'message' => 'Duplicate KPIC Found! Please resubmit with a new icon selected'
             ], 400);
         }
 
-        return redirect()->back()->with('error', $this->getMessage())->withInput();
+        return redirect()->back()->with('warning_kpic_duplicate', Patient::findOrFail($this->getMessage()))->withInput();
     }
 }

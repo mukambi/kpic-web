@@ -35,6 +35,6 @@ class IndexController extends Controller
     {
         $this->authorize('create_kpic');
         $patient = $this->createPatientRecord($request);
-        return redirect()->route('list.index')->with('success', 'You have successfully generated KPIC code of ' . $patient->kpic_code);
+        return redirect()->route('list.index')->with('success_kpic_generated', $patient);
     }
 }

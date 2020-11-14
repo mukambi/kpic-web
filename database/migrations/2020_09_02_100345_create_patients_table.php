@@ -18,8 +18,14 @@ class CreatePatientsTable extends Migration
             $table->longText('kpic_code')->nullable();
             $table->uuid('sep_id');
             $table->uuid('icon_id');
+            $table->uuid('creator_id');
             $table->boolean('possible_duplicate');
             $table->timestampsTz();
+
+            $table->foreign('creator_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
 
             $table->foreign('sep_id')
                 ->references('id')

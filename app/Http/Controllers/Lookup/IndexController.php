@@ -44,13 +44,13 @@ class IndexController extends Controller
     public function show(Request $request, $code, $icon_id)
     {
         $this->authorize('show_lookup_kpic');
-        $patients = Patient::with('sep')
+        $patient = Patient::with('sep')
             ->where('kpic_code', $code)
             ->where('icon_id', $icon_id)
-            ->get();
+            ->first();
 
         return view('lookup.show', [
-            'patients' => $patients
+            'patient' => $patient
         ]);
     }
 }
