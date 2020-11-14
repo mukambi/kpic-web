@@ -13,6 +13,16 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
+        // Create super admin user
+        $user = User::create([
+            'name' => 'KPIC Super Admin',
+            'email' => 'superadmin@example.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('Secret1234!')
+        ]);
+
+        $user->assignRole('super admin');
+
         // Create admin user
         $user = User::create([
             'name' => 'KPIC Admin',
