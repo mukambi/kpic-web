@@ -18,6 +18,7 @@ class UserTableSeeder extends Seeder
             'name' => 'KPIC Super Admin',
             'email' => 'superadmin@example.com',
             'email_verified_at' => now(),
+            'activated_at' => now(),
             'password' => Hash::make('Secret1234!')
         ]);
 
@@ -28,6 +29,7 @@ class UserTableSeeder extends Seeder
             'name' => 'KPIC Admin',
             'email' => 'admin@example.com',
             'email_verified_at' => now(),
+            'activated_at' => now(),
             'password' => Hash::make('Secret1234!')
         ]);
 

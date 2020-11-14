@@ -22,7 +22,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'sep_id'
+        'name', 'email', 'password', 'sep_id', 'activated_at'
     ];
 
     /**
@@ -33,6 +33,11 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function isActivated()
+    {
+        return !empty($this->activated_at);
+    }
 
     /**
      * The attributes that should be cast to native types.

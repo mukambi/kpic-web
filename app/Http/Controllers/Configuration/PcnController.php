@@ -13,6 +13,7 @@ class PcnController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('active');
     }
 
     public function index()

@@ -25,6 +25,7 @@ class SepTableSeeder extends Seeder
             'name' => 'Lira Regional Referral Hospital User',
             'email' => 'user@example.com',
             'email_verified_at' => now(),
+            'activated_at' => now(),
             'password' => Hash::make('Secret1234!')
         ]);
         $user->assignRole('user');

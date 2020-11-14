@@ -18,6 +18,7 @@ class IndexController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api');
+        $this->middleware('active');
     }
 
     public function lookup(Request $request)

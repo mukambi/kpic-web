@@ -70,4 +70,6 @@ Route::patch('/seps/users/update/{id}', 'SepController@updateUsers')->name('seps
 
 Route::get('/users', 'UserController@index')->name('users.index');
 Route::get('/users/create', 'UserController@create')->name('users.create');
+Route::patch('/users/activate/{user}', 'UserController@activate')->name('users.activate');
+Route::patch('/users/deactivate/{user}', 'UserController@deactivate')->name('users.deactivate');
 Route::post('/users/create', 'UserController@store')->name('users.save');

@@ -18,6 +18,7 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('active');
     }
 
     public function index()
@@ -80,5 +81,31 @@ class UserController extends Controller
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
         return $randomString;
+    }
+
+    public function activate(User $user)
+    {
+        $this->authorize('activate_system_users');
+
+        DB::transaction(function () use ($user){
+            $user->update([
+                'activated_at' => now()
+            ]);
+        });
+
+        return redirect()->back()->with('success', 'You have successfully activated the user');
+    }
+
+    public function deactivate(User $user)
+    {
+        $this->authorize('deactivate_system_users');
+
+        DB::transaction(function () use ($user){
+            $user->update([
+                'activated_at' => null
+            ]);
+        });
+
+        return redirect()->back()->with('success', 'You have successfully deactivated the user');
     }
 }

@@ -35,11 +35,12 @@ class ManagerSeeder extends Seeder
             }
         }
 
-        // Create admin user
+        // Create manager user
         $user = User::create([
             'name' => 'KPIC Manager',
             'email' => 'manager@example.com',
             'email_verified_at' => now(),
+            'activated_at' => now(),
             'password' => Hash::make('Secret1234!')
         ]);
 

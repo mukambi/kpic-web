@@ -23,6 +23,8 @@
       "edit_sep_users",
       "view_system_users",
       "create_system_users",
+      "activate_system_users",
+      "deactivate_system_users",
       "view_mobility_list",
       "view_kpic_list",
       "view_icons",
@@ -39,7 +41,9 @@
     "name": "admin",
     "permissions" : [
       "view_system_users",
-      "create_system_users"
+      "create_system_users",
+      "activate_system_users",
+      "deactivate_system_users"
     ]
   },
   {
@@ -49,7 +53,9 @@
       "view_mobility_list",
       "view_kpic_list",
       "view_system_users",
-      "create_system_users"
+      "create_system_users",
+      "activate_system_users",
+      "deactivate_system_users"
     ]
   },
   {

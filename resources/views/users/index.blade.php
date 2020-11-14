@@ -51,13 +51,15 @@
                                 <tr>
                                     <td>{{ $user->name }}</td>
                                     <td>
-                                        <a class="text-primary" href="mailto:{{$user->email}}?subject={{ config('app.name') }}">
+                                        <a class="text-primary"
+                                           href="mailto:{{$user->email}}?subject={{ config('app.name') }}">
                                             <u>{{ $user->email }}</u>
                                         </a>
                                     </td>
                                     <td>
                                         @foreach($user->roles as $role)
-                                            <span class="badge badge-success">{{ ucfirst(strtolower($role->name)) }}</span>
+                                            <span
+                                                class="badge badge-success">{{ ucfirst(strtolower($role->name)) }}</span>
                                             @if (!$loop->last), @endif
                                         @endforeach
                                     </td>
@@ -75,7 +77,39 @@
                                             <span class="text-danger">Not Assigned</span>
                                         @endif
                                     </td>
-                                    <td></td>
+                                    <td>
+                                        @if($user->id != auth()->id())
+                                            @if(!$user->isActivated())
+                                                @can('activate_system_users')
+                                                    <a class="btn btn-success" href="#"
+                                                       onclick="event.preventDefault();
+                                                           document.getElementById('activate-user-{{$user->id}}').submit();">
+                                                        Activate
+                                                    </a>
+                                                    <form id="activate-user-{{$user->id}}"
+                                                          action="{{ route('users.activate', ['user' => $user]) }}"
+                                                          method="post">
+                                                        @csrf
+                                                        @method('PATCH')
+                                                    </form>
+                                                @endcan
+                                            @else
+                                                @can('deactivate_system_users')
+                                                    <a class="btn btn-danger" href="#"
+                                                       onclick="event.preventDefault();
+                                                           document.getElementById('deactivate-user-{{$user->id}}').submit();">
+                                                        Deactivate
+                                                    </a>
+                                                    <form id="deactivate-user-{{$user->id}}"
+                                                          action="{{ route('users.deactivate', ['user' => $user]) }}"
+                                                          method="post">
+                                                        @csrf
+                                                        @method('PATCH')
+                                                    </form>
+                                                @endcan
+                                            @endif
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>
