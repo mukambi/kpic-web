@@ -15,7 +15,7 @@
                     <form action="{{ route('seps.save') }}" method="post">
                         @csrf
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-md-6">
                                 <label for="name">{{ __('Name') }}
                                     <span class="text-danger">*</span>
                                 </label>
@@ -27,7 +27,25 @@
                                     </span>
                                 @enderror
                             </div>
-                            <div class="col-6">
+                            <div class="col-md-6">
+                                <label for="type_id">{{ __('Type') }}
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select name="type_id" id="type_id" class="form-control @error('type_id') is-invalid @enderror" required>
+                                    <option {{ old('type_id') ? null : "selected" }} disabled>Select Type</option>
+                                    @foreach($sep_types as $sep_type)
+                                        <option {{ old('type_id') && (old('type_id') == $sep_type->id) ? "selected" : null }} value="{{ $sep_type->id }}">{{ ucfirst(strtolower($sep_type->name)) }}</option>
+                                    @endforeach
+                                </select>
+                                @error('type_id')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
                                 <label for="code">{{ __('Facility Code') }}</label>
                                 <input type="number" class="form-control @error('code') is-invalid @enderror"
                                        id="code" name="code" value="{{ old('code') }}">
@@ -37,20 +55,16 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <label for="type_id">{{ __('Type') }}
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <select name="type_id" id="type_id" class="form-control @error('type') is-invalid @enderror" required>
-                                    <option {{ old('type_id') ? null : "selected" }} disabled>Select Type</option>
-                                    @foreach($sep_types as $sep_type)
-                                        <option {{ old('type_id') && (old('type_id') == $sep_type->id) ? "selected" : null }} value="{{ $sep_type->id }}">{{ ucfirst(strtolower($sep_type->name)) }}</option>
+                            <div class="col-md-6">
+                                <label for="region_id">{{ __('Region') }}</label>
+                                <select name="region_id" id="region_id" class="form-control @error('region_id') is-invalid @enderror">
+                                    <option {{ old('region_id') ? null : "selected" }} disabled>Select Region</option>
+                                    @foreach($regions as $region)
+                                        <option {{ old('region_id') && (old('region_id') == $region->id) ? "selected" : null }} value="{{ $region->id }}">{{ ucwords(strtolower($region->name)) }}</option>
                                     @endforeach
                                 </select>
-                                @error('type_id')
-                                    <span class="invalid-feedback" role="alert">
+                                @error('region_id')
+                                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror

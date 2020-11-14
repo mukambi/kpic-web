@@ -16,7 +16,7 @@
                         @csrf
                         @method('PATCH')
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-md-6">
                                 <label for="name">{{ __('Name') }}
                                     <span class="text-danger">*</span>
                                 </label>
@@ -28,23 +28,11 @@
                                     </span>
                                 @enderror
                             </div>
-                            <div class="col-6">
-                                <label for="code">{{ __('Facility Code') }}</label>
-                                <input type="number" class="form-control @error('code') is-invalid @enderror"
-                                       id="code" name="code" value="{{ old('code') ?: $sep->code }}">
-                                @error('code')
-                                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
+                            <div class="col-md-6">
                                 <label for="type_id">{{ __('Type') }}
                                     <span class="text-danger">*</span>
                                 </label>
-                                <select name="type_id" id="type_id" class="form-control @error('type') is-invalid @enderror" required>
+                                <select name="type_id" id="type_id" class="form-control @error('type_id') is-invalid @enderror" required>
                                     <option {{ old('type_id') || $sep->location ? null : "selected" }} disabled>Select Type</option>
                                     @foreach($sep_types as $sep_type)
                                         <option
@@ -56,6 +44,36 @@
                                 </select>
                                 @error('type_id')
                                 <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="code">{{ __('Facility Code') }}</label>
+                                <input type="number" class="form-control @error('code') is-invalid @enderror"
+                                       id="code" name="code" value="{{ old('code') ?: $sep->code }}">
+                                @error('code')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="col-md-6">
+                                <label for="region_id">{{ __('Region') }}</label>
+                                <select name="region_id" id="region_id" class="form-control @error('region_id') is-invalid @enderror">
+                                    <option {{ old('region_id') || $sep->region->id ? null : "selected" }} disabled>Select Region</option>
+                                    @foreach($regions as $region)
+                                        <option
+                                            {{ old('region_id')
+                                                ? (old('region_id') == $region->id ? "selected" : null)
+                                                : ($sep->region->id == $region->id ? "selected" : null)
+                                            }} value="{{ $region->id }}">{{ ucwords(strtolower($region->name)) }}</option>
+                                    @endforeach
+                                </select>
+                                @error('region_id')
+                                    <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror

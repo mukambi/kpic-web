@@ -15,16 +15,20 @@ class CreateSepsTable extends Migration
     {
         Schema::create('seps', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('location');
-            $table->bigInteger('code')->unique();
+            $table->uuid('region_id')->nullable();
+            $table->bigInteger('code')->nullable()->unique();
             $table->string('name');
-            $table->longText('geocode')->nullable();
             $table->uuid('type_id');
             $table->timestampsTz();
 
             $table->foreign('type_id')
                 ->references('id')
                 ->on('sep_types')
+                ->onDelete('cascade');
+
+            $table->foreign('region_id')
+                ->references('id')
+                ->on('regions')
                 ->onDelete('cascade');
         });
     }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Region;
 use App\Sep;
 use App\SepType;
 use Illuminate\Database\Seeder;
@@ -17,8 +18,8 @@ class SepTableSeeder extends Seeder
         $sep = Sep::create([
             'name' => 'Lira Regional Referral Hospital',
             'code' => 16,
-            'location' => 'Lira, Uganda',
-            'type_id' => SepType::where('code', 'F')->first()->id
+            'type_id' => SepType::where('code', 'F')->first()->id,
+            'region_id' => Region::first()->id
         ]);
         $user = $sep->users()->create([
             'name' => 'Lira Regional Referral Hospital User',

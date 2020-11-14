@@ -27,6 +27,13 @@ Route::get('/configuration/sep-types/edit/{id}', 'Configuration\SepTypeControlle
 Route::patch('/configuration/sep-types/update/{id}', 'Configuration\SepTypeController@update')->name('configuration.sep-type.update');
 Route::delete('/configuration/sep-types/delete/{id}', 'Configuration\SepTypeController@destroy')->name('configuration.sep-type.destroy');
 
+Route::get('/configuration/regions', 'Configuration\RegionController@index')->name('configuration.regions.index');
+Route::get('/configuration/regions/create', 'Configuration\RegionController@create')->name('configuration.regions.create');
+Route::post('/configuration/regions/create', 'Configuration\RegionController@store')->name('configuration.regions.save');
+Route::get('/configuration/regions/edit/{id}', 'Configuration\RegionController@edit')->name('configuration.regions.edit');
+Route::patch('/configuration/regions/update/{id}', 'Configuration\RegionController@update')->name('configuration.regions.update');
+Route::delete('/configuration/regions/delete/{id}', 'Configuration\RegionController@destroy')->name('configuration.regions.destroy');
+
 Route::get('/configuration/icons', 'Configuration\IconController@index')->name('configuration.icons.index');
 Route::get('/configuration/icons/create', 'Configuration\IconController@create')->name('configuration.icons.create');
 Route::post('/configuration/icons/create', 'Configuration\IconController@store')->name('configuration.icons.save');

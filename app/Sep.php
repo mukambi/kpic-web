@@ -15,7 +15,7 @@ class Sep extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'code', 'type_id'
+        'name', 'code', 'type_id', 'region_id'
     ];
 
     public function users()
@@ -23,6 +23,14 @@ class Sep extends Model
         return $this->hasMany(
             User::class,
             'sep_id'
+        );
+    }
+
+    public function region()
+    {
+        return $this->belongsTo(
+            Region::class,
+            'region_id'
         );
     }
 

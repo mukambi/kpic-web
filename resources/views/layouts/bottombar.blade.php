@@ -16,7 +16,7 @@
                 </li>
             @endcan
             @can('view_system_users')
-                <li class="nav-item {{ Route::is(['users*']) ? 'active' : null }}" >
+                <li class="nav-item {{ Route::is(['users*']) ? 'active' : null }}">
                     <a class="nav-link" href="{{ route('users.index') }}">
                         <i class="link-icon" data-feather="users"></i>
                         <span class="menu-title">Users</span>
@@ -58,28 +58,40 @@
                         <ul class="submenu-item">
                             @can('view_seps')
                                 <li class="nav-item">
-                                    <a class="nav-link {{ Route::is(['seps*']) ? 'active' : null }}" href="{{ route('seps.index') }}">
+                                    <a class="nav-link {{ Route::is(['seps*']) ? 'active' : null }}"
+                                       href="{{ route('seps.index') }}">
                                         Service Entry Points
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('view_regions')
+                                <li class="nav-item">
+                                    <a class="nav-link {{ Route::is(['configuration.regions.*']) ? 'active' : null }}"
+                                       href="{{ route('configuration.regions.index') }}">
+                                        Regions
                                     </a>
                                 </li>
                             @endcan
                             @can('view_sep_types')
                                 <li class="nav-item">
-                                    <a class="nav-link {{ Route::is(['configuration.sep-type.*']) ? 'active' : null }}" href="{{ route('configuration.sep-type.index') }}">
+                                    <a class="nav-link {{ Route::is(['configuration.sep-type.*']) ? 'active' : null }}"
+                                       href="{{ route('configuration.sep-type.index') }}">
                                         Service Entry Point Type
                                     </a>
                                 </li>
                             @endcan
                             @can('view_icons')
                                 <li class="nav-item">
-                                    <a class="nav-link {{ Route::is(['configuration.icons.*']) ? 'active' : null }}" href="{{ route('configuration.icons.index') }}">
+                                    <a class="nav-link {{ Route::is(['configuration.icons.*']) ? 'active' : null }}"
+                                       href="{{ route('configuration.icons.index') }}">
                                         Icons
                                     </a>
                                 </li>
                             @endcan
                             @can('view_api_tokens')
                                 <li class="nav-item">
-                                    <a class="nav-link {{ Route::is(['configuration.credentials.*']) ? 'active' : null }}" href="{{ route('configuration.credentials.index') }}">
+                                    <a class="nav-link {{ Route::is(['configuration.credentials.*']) ? 'active' : null }}"
+                                       href="{{ route('configuration.credentials.index') }}">
                                         Api Credentials
                                     </a>
                                 </li>

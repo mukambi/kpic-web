@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Region;
 use App\Sep;
 use App\SepType;
 use App\User;
@@ -28,7 +29,8 @@ class SepController extends Controller
     {
         $this->authorize('create_sep');
         return view('sep.create', [
-            'sep_types' => SepType::all()
+            'sep_types' => SepType::all(),
+            'regions' => Region::all()
         ]);
     }
 
@@ -38,14 +40,16 @@ class SepController extends Controller
         $request->validate([
             'code' => 'nullable|integer|unique:seps',
             'name' => 'required|string|max:255',
-            'type_id' => 'required|uuid'
+            'type_id' => 'required|uuid|exists:sep_types,id',
+            'region_id' => 'nullable|uuid|exists:regions,id',
         ]);
 
         DB::transaction(function () use ($request) {
             Sep::create([
                 'name' => $request->name,
                 'code' => $request->code,
-                'type_id' => $request->type_id
+                'type_id' => $request->type_id,
+                'region_id' => $request->region_id
             ]);
         });
 
@@ -59,7 +63,8 @@ class SepController extends Controller
         $this->authorize('edit_sep');
         return view('sep.edit', [
             'sep_types' => SepType::all(),
-            'sep' => Sep::with('type')->findOrFail($id)
+            'sep' => Sep::with('type', 'region')->findOrFail($id),
+            'regions' => Region::all()
         ]);
     }
 
@@ -70,14 +75,16 @@ class SepController extends Controller
         $request->validate([
             'code' => ['nullable', 'integer', Rule::unique('seps')->ignore($sep->id)],
             'name' => 'required|string|max:255',
-            'type_id' => 'required|uuid'
+            'type_id' => 'required|uuid|exists:sep_types,id',
+            'region_id' => 'nullable|uuid|exists:regions,id',
         ]);
 
         DB::transaction(function () use ($request, $sep) {
             $sep->update([
                 'name' => $request->name,
                 'code' => $request->code,
-                'type_id' => $request->type_id
+                'type_id' => $request->type_id,
+                'region_id' => $request->region_id
             ]);
         });
 

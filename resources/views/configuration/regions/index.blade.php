@@ -4,13 +4,13 @@
     <link rel="stylesheet" href="{{ asset('/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css') }}">
 @endsection
 @section('content')
-    @component('layouts.components.breadcrumbs',['name' => 'Service Entry Points'])@endcomponent
+    @component('layouts.components.breadcrumbs',['name' => 'Regions'])@endcomponent
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    @can('create_sep')
-                        <a href="{{ route('seps.create') }}" class="btn btn-primary">Add new Service Entry Point</a>
+                    @can('create_region')
+                        <a href="{{ route('configuration.regions.create') }}" class="btn btn-primary">Add new Region</a>
                     @endcan
                 </div>
             </div>
@@ -20,46 +20,45 @@
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">Service Entry Points</h6>
+                    <h6 class="card-title">Regions</h6>
                     <p class="card-description">
-                        Below is a list of all Service Entry Points.
+                        Below is a list of all Regions.
                     </p>
                     <div class="table-responsive">
-                        <table class="table seps">
+                        <table class="table regions">
                             <thead>
                             <tr>
+                                <th>#</th>
                                 <th>Name</th>
-                                <th>Region</th>
-                                <th>Code</th>
-                                <th>Type</th>
-                                <th>Users</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
                             <tfoot>
                             <tr>
+                                <th>#</th>
                                 <th>Name</th>
-                                <th>Region</th>
-                                <th>Code</th>
-                                <th>Type</th>
-                                <th>Users</th>
                                 <th>Actions</th>
                             </tr>
                             </tfoot>
                             <tbody>
-                            @foreach($seps as $sep)
+                            @foreach($regions as $region)
                                 <tr>
-                                    <td>{{ $sep->name }}</td>
-                                    <td>{{ ucwords(strtolower($sep->region->name)) }}</td>
-                                    <td>{{ $sep->code ?: 'N/A' }}</td>
-                                    <td>{{ $sep->type->name }}</td>
-                                    <td>{{ $sep->users->count() }}</td>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $region->name }}</td>
                                     <td>
-                                        @can('edit_sep')
-                                            <a href="{{ route('seps.edit', ['id' => $sep->id]) }}" class="btn btn-primary">Edit Service Entry point</a>
+                                        @can('edit_region')
+                                            <a href="{{ route('configuration.regions.edit', ['id' => $region->id]) }}" class="btn btn-primary">Edit</a>
                                         @endcan
-                                        @can('edit_sep_users')
-                                            <a href="{{ route('seps.users.edit', ['id' => $sep->id]) }}" class="btn btn-success">Add Users</a>
+                                        @can('delete_region')
+                                            <a class="btn btn-danger" href="#"
+                                               onclick="event.preventDefault();
+                                                         document.getElementById('delete-region-{{ $region->id }}').submit();">
+                                                Delete
+                                            </a>
+                                            <form id="delete-region-{{$region->id}}" action="{{ route('configuration.regions.destroy', ['id' => $region->id]) }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
                                         @endcan
                                     </td>
                                 </tr>
@@ -78,9 +77,9 @@
     <script src="{{ asset('/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.js') }}"></script>
     <script>
         $(document).ready(function () {
-            $(".seps").DataTable({
+            $(".regions").DataTable({
                 "language": {
-                    "emptyTable": "No Service Entry Points found."
+                    "emptyTable": "No Regions found."
                 }
             })
         });

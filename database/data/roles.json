@@ -28,7 +28,11 @@
       "view_icons",
       "create_icon",
       "edit_icon",
-      "delete_icon"
+      "delete_icon",
+      "view_regions",
+      "create_region",
+      "edit_region",
+      "delete_region"
     ]
   },
   {
