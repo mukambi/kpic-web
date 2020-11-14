@@ -29,9 +29,9 @@
                             <thead>
                             <tr>
                                 <th>Name</th>
+                                <th>Type</th>
                                 <th>Region</th>
                                 <th>Code</th>
-                                <th>Type</th>
                                 <th>Users</th>
                                 <th>Actions</th>
                             </tr>
@@ -39,9 +39,9 @@
                             <tfoot>
                             <tr>
                                 <th>Name</th>
+                                <th>Type</th>
                                 <th>Region</th>
                                 <th>Code</th>
-                                <th>Type</th>
                                 <th>Users</th>
                                 <th>Actions</th>
                             </tr>
@@ -50,9 +50,9 @@
                             @foreach($seps as $sep)
                                 <tr>
                                     <td>{{ $sep->name }}</td>
+                                    <td>{{ $sep->type->name }}</td>
                                     <td>{{ ucwords(strtolower($sep->region->name)) }}</td>
                                     <td>{{ $sep->code ?: 'N/A' }}</td>
-                                    <td>{{ $sep->type->name }}</td>
                                     <td>{{ $sep->users->count() }}</td>
                                     <td>
                                         @can('edit_sep')
