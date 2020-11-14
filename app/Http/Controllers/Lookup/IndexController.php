@@ -48,7 +48,6 @@ class IndexController extends Controller
             ->where('kpic_code', $code)
             ->where('icon_id', $icon_id)
             ->get();
-        $this->storeTrailsAndLookups($request, $patients);
 
         return view('lookup.show', [
             'patients' => $patients

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dedup;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\GeneratesKPIC;
 use App\Lookup;
+use App\Patient;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
@@ -20,7 +21,10 @@ class IndexController extends Controller
     {
         $this->authorize('view_dedup_reports');
         return view('dedup.index', [
-            'lookups' => Lookup::with('patient.sep.region')->latest()->get()
+            'patients' => Patient::with('sep.region')
+                ->where('possible_duplicate', true)
+                ->latest()
+                ->get()
         ]);
     }
 }

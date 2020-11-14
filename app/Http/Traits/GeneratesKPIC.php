@@ -42,7 +42,8 @@ trait GeneratesKPIC
             $patient = Patient::create([
                 'sep_id' => $sep->id,
                 'icon_id' => $icon->id,
-                'kpic_code' => $kpic_code
+                'kpic_code' => $kpic_code,
+                'possible_duplicate' => $request->possible_duplicate == 'true'
             ]);
             $this->storeTrail($patient, $sep, 'Generated', $request->user());
         });
@@ -71,7 +72,8 @@ trait GeneratesKPIC
             'second_name' => 'nullable|string|max:255',
             'yob' => 'required|integer|max:' . date('Y'),
             'mob' => 'nullable|string|max:255',
-            'icon' => 'required|uuid'
+            'icon' => 'required|uuid',
+            'possible_duplicate' => 'nullable|in:true'
         ]);
     }
 

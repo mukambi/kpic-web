@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css') }}">
 @endsection
 @section('content')
-    @component('layouts.components.breadcrumbs',['name' => 'Duplicate KPICs'])@endcomponent
+    @component('layouts.components.breadcrumbs',['name' => 'Possible Duplicate KPICs'])@endcomponent
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
@@ -23,7 +23,6 @@
                                 <th>Date</th>
                                 <th>Service Entry Point</th>
                                 <th>Region</th>
-                                <th>User</th>
                                 <th>Type</th>
                             </tr>
                             </thead>
@@ -35,23 +34,21 @@
                                 <th>Date</th>
                                 <th>Service Entry Point</th>
                                 <th>Region</th>
-                                <th>User</th>
                                 <th>Type</th>
                             </tr>
                             </tfoot>
                             <tbody>
-                            @foreach($lookups as $lookup)
+                            @foreach($patients as $patient)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>
-                                        <code>{{ $lookup->patient->kpic_code }}</code>
+                                        <code>{{ $patient->kpic_code }}</code>
                                     </td>
-                                    <td>{{ $lookup->created_at->format('g:i a') }}</td>
-                                    <td>{!! $lookup->created_at->format('j<\s\up>S</\s\up> F Y') !!}</td>
-                                    <td>{{ $lookup->patient->sep->name }}</td>
-                                    <td>{{ $lookup->patient->sep->region->name }}</td>
-                                    <td>{{ $lookup->user->name }}</td>
-                                    <td>{{ count($lookup->duplicates) ? 'Multiple match with code ' . implode(",", $lookup->duplicates->pluck('kpic_code')->toArray()) : 'Not Found' }}</td>
+                                    <td>{{ $patient->created_at->format('g:i a') }}</td>
+                                    <td>{!! $patient->created_at->format('j<\s\up>S</\s\up> F Y') !!}</td>
+                                    <td>{{ $patient->sep->name }}</td>
+                                    <td>{{ $patient->sep->region->name }}</td>
+                                    <td>{{ 'Multiple match with code ' . $patient->kpic_code }}</td>
                                 </tr>
                             @endforeach
                             </tbody>

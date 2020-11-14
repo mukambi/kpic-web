@@ -49,6 +49,7 @@ class KPICTableSeeder extends Seeder
             'sep_id' => $sep->id,
             'icon_id' => $icon->id,
             'kpic_code' => $kpic_code,
+            'possible_duplicate' => false
         ]);
         $this->storeTrail($patient, $sep, 'Generated');
     }

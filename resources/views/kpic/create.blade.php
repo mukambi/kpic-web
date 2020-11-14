@@ -23,8 +23,11 @@
                                     <label for="sep_id">{{ __('Service Entry Point') }}
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <select name="sep_id" id="sep_id" class="form-control @error('sep_id') is-invalid @enderror" required>
-                                        <option {{ old('sep_id') ? null : "selected" }} disabled>Select Service Entry Point</option>
+                                    <select name="sep_id" id="sep_id"
+                                            class="form-control @error('sep_id') is-invalid @enderror" required>
+                                        <option {{ old('sep_id') ? null : "selected" }} disabled>Select Service Entry
+                                            Point
+                                        </option>
                                         @foreach($seps as $sep)
                                             <option
                                                 {{ old('sep_id') && (old('sep_id') == $sep->id) ? "selected" : null }}
@@ -32,7 +35,7 @@
                                         @endforeach
                                     </select>
                                     @error('sep_id')
-                                        <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
@@ -59,7 +62,7 @@
                                 <input type="text" class="form-control @error('first_name') is-invalid @enderror"
                                        id="first_name" name="first_name" value="{{ old('first_name') }}" required>
                                 @error('first_name')
-                                    <span class="invalid-feedback" role="alert">
+                                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
@@ -69,7 +72,7 @@
                                 <input type="text" class="form-control @error('second_name') is-invalid @enderror"
                                        id="second_name" name="second_name" value="{{ old('second_name') }}">
                                 @error('second_name')
-                                    <span class="invalid-feedback" role="alert">
+                                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
@@ -83,7 +86,7 @@
                                 <input type="number" class="form-control @error('yob') is-invalid @enderror"
                                        id="yob" name="yob" value="{{ old('yob') }}" max="{{ date('Y') }}" required>
                                 @error('yob')
-                                    <span class="invalid-feedback" role="alert">
+                                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
@@ -92,7 +95,8 @@
                                 <label for="mob">{{ __('Month of Birth') }}
                                     <span class="text-danger">*</span>
                                 </label>
-                                <select name="mob" id="mob" class="form-control @error('mob') is-invalid @enderror" required>
+                                <select name="mob" id="mob" class="form-control @error('mob') is-invalid @enderror"
+                                        required>
                                     <option {{ old('mob') ? null : "selected" }} disabled>Select Month of Birth</option>
                                     @foreach($months as $month)
                                         <option
@@ -101,10 +105,20 @@
                                     @endforeach
                                 </select>
                                 @error('mob')
-                                    <span class="invalid-feedback" role="alert">
+                                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check form-check-flat form-check-primary">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input" name="possible_duplicate"
+                                               value="true"
+                                               id="possible_duplicate" {{ old('possible_duplicate') ? 'checked' : '' }}>
+                                        Possible Duplicate
+                                    </label>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -117,7 +131,8 @@
                                 <div class="col-4 border">
                                     <div class="form-check form-check-flat form-check-primary">
                                         <label class="form-check-label">
-                                            <input type="radio" class="form-check-input" name="icon" value="{{ $icon->id }}"
+                                            <input type="radio" class="form-check-input" name="icon"
+                                                   value="{{ $icon->id }}"
                                                 {{ old('icon') && old('icon') == $icon->id ? "checked" : null }}>
                                             {{$icon->name}}
                                         </label>
