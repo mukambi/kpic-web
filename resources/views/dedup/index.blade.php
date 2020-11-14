@@ -23,7 +23,6 @@
                                 <th>Date</th>
                                 <th>Service Entry Point</th>
                                 <th>Region</th>
-                                <th>Type</th>
                             </tr>
                             </thead>
                             <tfoot>
@@ -34,7 +33,6 @@
                                 <th>Date</th>
                                 <th>Service Entry Point</th>
                                 <th>Region</th>
-                                <th>Type</th>
                             </tr>
                             </tfoot>
                             <tbody>
@@ -48,7 +46,6 @@
                                     <td>{!! $patient->created_at->format('j<\s\up>S</\s\up> F Y') !!}</td>
                                     <td>{{ $patient->sep->name }}</td>
                                     <td>{{ $patient->sep->region->name }}</td>
-                                    <td>{{ 'Multiple match with code ' . $patient->kpic_code }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -69,7 +66,7 @@
                 "language": {
                     "emptyTable": "No Duplicate KPICs found."
                 },
-                "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, "All"]],
+                "lengthMenu": @json(config('settings.pagination_length')),
             })
         });
     </script>

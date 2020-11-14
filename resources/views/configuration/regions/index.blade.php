@@ -81,7 +81,7 @@
                 "language": {
                     "emptyTable": "No Regions found."
                 },
-                "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, "All"]],
+                "lengthMenu": @json(config('settings.pagination_length')),
             })
         });
     </script>
