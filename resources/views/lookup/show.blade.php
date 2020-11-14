@@ -9,9 +9,9 @@
         <div class="col-md-12">
             @can('create_kpic')
                 @if(count($patients))
-                    <a href="{{ route('kpic.create') }}" class="btn btn-success">Generate KPIC</a>
+                    <a href="{{ route('list.kpic.create') }}" class="btn btn-success">Generate KPIC</a>
                 @else
-                    <a href="{{ route('kpic.create') }}" class="btn btn-danger btn-block">Generate KPIC</a>
+                    <a href="{{ route('list.kpic.create') }}" class="btn btn-danger btn-block">Generate KPIC</a>
                 @endif
             @endcan
         </div>

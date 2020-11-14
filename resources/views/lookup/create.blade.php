@@ -3,16 +3,16 @@
     @parent
 @endsection
 @section('content')
-    @component('layouts.components.breadcrumbs', ['name' => 'Lookup KPIC Code'])@endcomponent
+    @component('layouts.components.breadcrumbs', ['name' => 'Search KPIC Code'])@endcomponent
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">Lookup KPIC Code</h6>
+                    <h6 class="card-title">Search KPIC Code</h6>
                     <p class="card-description">
-                        Fill in the field below to lookup KPIC code
+                        Fill in the field below to search KPIC code
                     </p>
-                    <form action="{{ route('lookup.search') }}" method="post">
+                    <form action="{{ route('list.lookup.search') }}" method="post">
                         @csrf
                         <div class="row">
                             <div class="col-12 my-2">

@@ -9,20 +9,6 @@
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    @can('create_kpic')
-                        <a href="{{ route('kpic.create') }}" class="btn btn-primary">Generate KPIC</a>
-                    @endcan
-                    @can('lookup_kpic')
-                        <a href="{{ route('lookup.create') }}" class="btn btn-success">Lookup KPIC</a>
-                    @endcan
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 grid-margin stretch-card">
-            <div class="card">
-                <div class="card-body">
                     <h6 class="card-title">All KPIC</h6>
                     <p class="card-description">
                         Below is a list of all KPIC.

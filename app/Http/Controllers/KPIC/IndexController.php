@@ -19,14 +19,6 @@ class IndexController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
-    {
-        $this->authorize('view_kpics');
-        return view('kpic.index', [
-            'patients' => Patient::with('sep')->get()
-        ]);
-    }
-
     public function create()
     {
         $this->authorize('create_kpic');
@@ -43,6 +35,6 @@ class IndexController extends Controller
     {
         $this->authorize('create_kpic');
         $patient = $this->createPatientRecord($request);
-        return redirect()->route('kpic.index')->with('success', 'You have successfully generated KPIC code of ' . $patient->kpic_code);
+        return redirect()->route('list.index')->with('success', 'You have successfully generated KPIC code of ' . $patient->kpic_code);
     }
 }

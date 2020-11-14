@@ -49,19 +49,16 @@ Route::get('/configuration/pcn/edit/{id}', 'Configuration\PcnController@edit')->
 Route::patch('/configuration/pcn/update/{id}', 'Configuration\PcnController@update')->name('configuration.pcn.update');
 Route::delete('/configuration/pcn/delete/{id}', 'Configuration\PcnController@destroy')->name('configuration.pcn.destroy');
 
-Route::get('/kpics', 'KPIC\IndexController@index')->name('kpic.index');
-Route::get('/kpics/create', 'KPIC\IndexController@create')->name('kpic.create');
-Route::post('/kpics/create', 'KPIC\IndexController@store')->name('kpic.store');
-
-Route::get('/lookup/create', 'Lookup\IndexController@create')->name('lookup.create');
-Route::get('/lookup/show/{code}/{icon_id}', 'Lookup\IndexController@show')->name('lookup.show');
-Route::post('/lookup/create', 'Lookup\IndexController@search')->name('lookup.search');
-
 Route::get('/dedup', 'Dedup\IndexController@index')->name('dedup.index');
 
 Route::get('/mobility', 'Mobility\IndexController@index')->name('mobility.index');
 
 Route::get('/list', 'AuditTrail\IndexController@index')->name('list.index');
+Route::get('/list/kpics/create', 'KPIC\IndexController@create')->name('list.kpic.create');
+Route::post('/list/kpics/create', 'KPIC\IndexController@store')->name('list.kpic.store');
+Route::get('/list/search/create', 'Lookup\IndexController@create')->name('list.lookup.create');
+Route::get('/list/search/show/{code}/{icon_id}', 'Lookup\IndexController@show')->name('list.lookup.show');
+Route::post('/list/search/create', 'Lookup\IndexController@search')->name('list.lookup.search');
 
 Route::get('/seps', 'SepController@index')->name('seps.index');
 Route::get('/seps/create', 'SepController@create')->name('seps.create');

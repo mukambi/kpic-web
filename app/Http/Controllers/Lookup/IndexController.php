@@ -35,7 +35,7 @@ class IndexController extends Controller
     {
         $this->authorize('lookup_kpic');
         $kpic_code = $this->lookupPatientRecord($request);
-        return redirect()->route('lookup.show', [
+        return redirect()->route('list.lookup.show', [
             'code' => (string) $kpic_code,
             'icon_id' => (string) $request->icon
         ]);

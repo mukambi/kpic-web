@@ -12,7 +12,7 @@
                     <p class="card-description">
                         Fill in the field below to create KPIC code
                     </p>
-                    <form action="{{ route('kpic.store') }}" method="post">
+                    <form action="{{ route('list.kpic.store') }}" method="post">
                         @csrf
                         <div class="row">
                             <div class="col-12 my-2">
