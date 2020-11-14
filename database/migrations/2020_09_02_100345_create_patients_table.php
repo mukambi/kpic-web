@@ -24,18 +24,15 @@ class CreatePatientsTable extends Migration
 
             $table->foreign('creator_id')
                 ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
+                ->on('users');
 
             $table->foreign('sep_id')
                 ->references('id')
-                ->on('seps')
-                ->onDelete('cascade');
+                ->on('seps');
 
             $table->foreign('icon_id')
                 ->references('id')
-                ->on('icons')
-                ->onDelete('cascade');
+                ->on('icons');
         });
     }
 

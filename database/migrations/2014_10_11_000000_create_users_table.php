@@ -26,8 +26,7 @@ class CreateUsersTable extends Migration
 
             $table->foreign('sep_id')
                 ->references('id')
-                ->on('seps')
-                ->onDelete('cascade');
+                ->on('seps');
         });
     }
 

@@ -23,18 +23,15 @@ class CreateAuditTrailsTable extends Migration
 
             $table->foreign('patient_id')
                 ->references('id')
-                ->on('patients')
-                ->onDelete('cascade');
+                ->on('patients');
 
             $table->foreign('user_id')
                 ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
+                ->on('users');
 
             $table->foreign('sep_id')
                 ->references('id')
-                ->on('seps')
-                ->onDelete('cascade');
+                ->on('seps');
         });
     }
 

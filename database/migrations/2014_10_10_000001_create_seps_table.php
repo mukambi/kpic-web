@@ -23,13 +23,11 @@ class CreateSepsTable extends Migration
 
             $table->foreign('type_id')
                 ->references('id')
-                ->on('sep_types')
-                ->onDelete('cascade');
+                ->on('sep_types');
 
             $table->foreign('region_id')
                 ->references('id')
-                ->on('regions')
-                ->onDelete('cascade');
+                ->on('regions');
         });
     }
 

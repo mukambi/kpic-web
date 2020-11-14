@@ -23,13 +23,11 @@ class CreateLookupsTable extends Migration
 
             $table->foreign('patient_id')
                 ->references('id')
-                ->on('patients')
-                ->onDelete('cascade');
+                ->on('patients');
 
             $table->foreign('sep_id')
                 ->references('id')
-                ->on('seps')
-                ->onDelete('cascade');
+                ->on('seps');
         });
     }
 

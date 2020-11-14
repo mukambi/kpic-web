@@ -16,7 +16,7 @@
                 </a>
             </div>
         @endcan
-        @can('view_kpics')
+        @can('view_kpic_list')
             <div class="col-12 my-3">
                 <a href="{{ route('list.index') }}" class="btn btn-large btn-block" style="height: 100px;background-color: #F9FAFB;border-color: #000000;">
                     <span class="text-right" style="font-size: 50px;">List</span>
