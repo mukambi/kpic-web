@@ -22,6 +22,7 @@
                                 <th>Time</th>
                                 <th>Date</th>
                                 <th>Service Entry Point</th>
+                                <th>Region</th>
                                 <th>User</th>
                                 <th>Action</th>
                             </tr>
@@ -33,6 +34,7 @@
                                 <th>Time</th>
                                 <th>Date</th>
                                 <th>Service Entry Point</th>
+                                <th>Region</th>
                                 <th>User</th>
                                 <th>Action</th>
                             </tr>
@@ -47,6 +49,7 @@
                                     <td>{{ $trail->created_at->format('g:i a') }}</td>
                                     <td>{!! $trail->created_at->format('j<\s\up>S</\s\up> F Y') !!}</td>
                                     <td>{{ $trail->sep->name }}</td>
+                                    <td>{{ $trail->sep->region->name }}</td>
                                     <td>{{ $trail->user->name }}</td>
                                     <td>{{ $trail->action }}</td>
                                 </tr>

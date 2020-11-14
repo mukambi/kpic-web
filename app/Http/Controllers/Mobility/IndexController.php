@@ -22,7 +22,7 @@ class IndexController extends Controller
         $patients = [];
         $kpic_code = null;
         if($kpic_code = $request->get('code')){
-            $patients = Patient::with('sep')
+            $patients = Patient::with('sep.region')
                 ->where('kpic_code', $kpic_code)
                 ->get();
             $this->storeTrailsAndLookups($request, $patients);

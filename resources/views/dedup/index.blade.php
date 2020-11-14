@@ -22,6 +22,7 @@
                                 <th>Time</th>
                                 <th>Date</th>
                                 <th>Service Entry Point</th>
+                                <th>Region</th>
                                 <th>User</th>
                                 <th>Type</th>
                             </tr>
@@ -33,6 +34,7 @@
                                 <th>Time</th>
                                 <th>Date</th>
                                 <th>Service Entry Point</th>
+                                <th>Region</th>
                                 <th>User</th>
                                 <th>Type</th>
                             </tr>
@@ -47,6 +49,7 @@
                                     <td>{{ $lookup->created_at->format('g:i a') }}</td>
                                     <td>{!! $lookup->created_at->format('j<\s\up>S</\s\up> F Y') !!}</td>
                                     <td>{{ $lookup->patient->sep->name }}</td>
+                                    <td>{{ $lookup->patient->sep->region->name }}</td>
                                     <td>{{ $lookup->user->name }}</td>
                                     <td>{{ count($lookup->duplicates) ? 'Multiple match with code ' . implode(",", $lookup->duplicates->pluck('kpic_code')->toArray()) : 'Not Found' }}</td>
                                 </tr>

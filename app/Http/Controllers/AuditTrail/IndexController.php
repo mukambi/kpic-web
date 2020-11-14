@@ -17,7 +17,7 @@ class IndexController extends Controller
     {
         $this->authorize('view_kpic_list');
         return view('audit-trail.index', [
-            'trails' => AuditTrail::with('patient.sep')->latest()->get()
+            'trails' => AuditTrail::with('patient.sep.region')->latest()->get()
         ]);
     }
 }

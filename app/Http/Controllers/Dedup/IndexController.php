@@ -20,7 +20,7 @@ class IndexController extends Controller
     {
         $this->authorize('view_dedup_reports');
         return view('dedup.index', [
-            'lookups' => Lookup::with('patient.sep')->latest()->get()
+            'lookups' => Lookup::with('patient.sep.region')->latest()->get()
         ]);
     }
 }
