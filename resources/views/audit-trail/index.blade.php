@@ -85,7 +85,8 @@
             $(".questions").DataTable({
                 "language": {
                     "emptyTable": "No KPICs found."
-                }
+                },
+                "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, "All"]],
             })
         });
     </script>

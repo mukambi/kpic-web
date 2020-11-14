@@ -83,7 +83,8 @@
             $(".seps").DataTable({
                 "language": {
                     "emptyTable": "No Population Category Numbers found."
-                }
+                },
+                "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, "All"]],
             })
         });
     </script>

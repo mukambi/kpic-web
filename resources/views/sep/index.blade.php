@@ -81,7 +81,8 @@
             $(".seps").DataTable({
                 "language": {
                     "emptyTable": "No Service Entry Points found."
-                }
+                },
+                "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, "All"]],
             })
         });
     </script>
