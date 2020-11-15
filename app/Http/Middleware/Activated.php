@@ -13,7 +13,7 @@ class Activated
      * @param Request $request
      * @param Closure $next
      *
-     * @return mixed
+     * @return mixed|void
      */
     public function handle(Request $request, Closure $next)
     {
