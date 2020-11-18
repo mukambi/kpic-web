@@ -79,7 +79,8 @@
         $(document).ready(function () {
             $(".regions").DataTable({
                 "language": {
-                    "emptyTable": "No Regions found."
+                    "emptyTable": "No Regions found.",
+                    "search": "Search Table:"
                 },
                 "lengthMenu": @json(config('settings.pagination_length')),
             })

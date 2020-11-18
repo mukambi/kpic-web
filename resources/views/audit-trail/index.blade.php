@@ -102,7 +102,8 @@
         $(document).ready(function () {
             $(".questions").DataTable({
                 "language": {
-                    "emptyTable": "No KPICs found."
+                    "emptyTable": "No KPICs found.",
+                    "search": "Search Table:"
                 },
                 "lengthMenu": @json(config('settings.pagination_length')),
             })

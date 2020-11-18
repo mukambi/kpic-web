@@ -82,7 +82,8 @@
         $(document).ready(function () {
             $(".seps").DataTable({
                 "language": {
-                    "emptyTable": "No Service Entry Points Type found."
+                    "emptyTable": "No Service Entry Points Type found.",
+                    "search": "Search Table:"
                 },
                 "lengthMenu": @json(config('settings.pagination_length')),
             })

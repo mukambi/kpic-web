@@ -159,7 +159,8 @@
         $(document).ready(function () {
             $(".users").DataTable({
                 "language": {
-                    "emptyTable": "No Users found."
+                    "emptyTable": "No Users found.",
+                    "search": "Search Table:"
                 },
                 "lengthMenu": @json(config('settings.pagination_length')),
             })

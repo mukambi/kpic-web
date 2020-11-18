@@ -60,7 +60,8 @@
         $(document).ready(function () {
             $(".questions").DataTable({
                 "language": {
-                    "emptyTable": "No KPIC found."
+                    "emptyTable": "No KPIC found.",
+                    "search": "Search Table:"
                 },
                 "lengthMenu": @json(config('settings.pagination_length')),
             })

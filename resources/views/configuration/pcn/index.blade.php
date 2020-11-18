@@ -82,7 +82,8 @@
         $(document).ready(function () {
             $(".seps").DataTable({
                 "language": {
-                    "emptyTable": "No Population Category Numbers found."
+                    "emptyTable": "No Population Category Numbers found.",
+                    "search": "Search Table:"
                 },
                 "lengthMenu": @json(config('settings.pagination_length')),
             })

@@ -6,7 +6,7 @@
 @section('content')
     @if(count($regions))
         <div class="row">
-            <div class="mr-auto">w
+            <div class="mr-auto">
                 <div class="col mb-4">
                     <nav class="page-breadcrumb">
                         <ol class="breadcrumb">
@@ -95,7 +95,8 @@
         $(document).ready(function () {
             $(".questions").DataTable({
                 "language": {
-                    "emptyTable": "No Duplicate KPICs found."
+                    "emptyTable": "No Duplicate KPICs found.",
+                    "search": "Search Table:"
                 },
                 "lengthMenu": @json(config('settings.pagination_length')),
             })
