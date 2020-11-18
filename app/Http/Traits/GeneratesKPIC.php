@@ -170,7 +170,7 @@ trait GeneratesKPIC
                     'sep_id' => $patient->sep->id,
                     'duplicate_patient_ids' => json_encode($array)
                 ]);
-                $this->storeTrail($patient, $patient->sep, 'Lookup', auth()->user());
+                $this->storeTrail($patient, $patient->sep, 'Search', auth()->user());
             }
         });
 
@@ -191,7 +191,7 @@ trait GeneratesKPIC
                     'sep_id' => $sep->id,
                     'duplicate_patient_ids' => json_encode($array)
                 ]);
-                $this->storeTrail($patient, $sep, 'Lookup', $auth);
+                $this->storeTrail($patient, $sep, 'Search', $auth);
             });
         } else {
             $patients->each(function ($patient) use ($auth, $patients) {
@@ -204,7 +204,7 @@ trait GeneratesKPIC
                     'sep_id' => $sep->id,
                     'duplicate_patient_ids' => json_encode($array)
                 ]);
-                $this->storeTrail($patient, $sep, 'Lookup', $auth);
+                $this->storeTrail($patient, $sep, 'Search', $auth);
             });
         }
     }

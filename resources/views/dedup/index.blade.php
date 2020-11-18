@@ -6,7 +6,7 @@
 @section('content')
     @if(count($regions))
         <div class="row">
-            <div class="mr-auto">
+            <div class="mr-auto">w
                 <div class="col mb-4">
                     <nav class="page-breadcrumb">
                         <ol class="breadcrumb">
