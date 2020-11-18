@@ -63,12 +63,12 @@
                             <div class="col-md-6">
                                 <label for="region_id">{{ __('Region') }}</label>
                                 <select name="region_id" id="region_id" class="form-control @error('region_id') is-invalid @enderror">
-                                    <option {{ old('region_id') || $sep->region->id ? null : "selected" }} disabled>Select Region</option>
+                                    <option {{ old('region_id') || ($sep->region && $sep->region->id) ? null : "selected" }} disabled>Select Region</option>
                                     @foreach($regions as $region)
                                         <option
                                             {{ old('region_id')
                                                 ? (old('region_id') == $region->id ? "selected" : null)
-                                                : ($sep->region->id == $region->id ? "selected" : null)
+                                                : ($sep->region && ($sep->region->id == $region->id) ? "selected" : null)
                                             }} value="{{ $region->id }}">{{ ucwords(strtolower($region->name)) }}</option>
                                     @endforeach
                                 </select>

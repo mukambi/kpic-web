@@ -182,29 +182,11 @@ trait GeneratesKPIC
         $auth = $request->user();
         if ($auth->sep_id) {
             $patients->each(function ($patient) use ($auth, $patients) {
-                $array = collect($patients)->reject(function ($p) use ($patient) {
-                    return $p->id == $patient->id;
-                })->pluck('id')->toArray();
-                $sep = $auth->sep;
-                $patient->lookups()->create([
-                    'user_id' => $auth->id,
-                    'sep_id' => $sep->id,
-                    'duplicate_patient_ids' => json_encode($array)
-                ]);
-                $this->storeTrail($patient, $sep, 'Search', $auth);
+                $this->storeTrail($patient, $auth->sep, 'Search', $auth);
             });
         } else {
             $patients->each(function ($patient) use ($auth, $patients) {
-                $array = collect($patients)->reject(function ($p) use ($patient) {
-                    return $p->id == $patient->id;
-                })->pluck('id')->toArray();
-                $sep = $patient->sep;
-                $patient->lookups()->create([
-                    'user_id' => $auth->id,
-                    'sep_id' => $sep->id,
-                    'duplicate_patient_ids' => json_encode($array)
-                ]);
-                $this->storeTrail($patient, $sep, 'Search', $auth);
+                $this->storeTrail($patient, $patient->sep, 'Search', $auth);
             });
         }
     }

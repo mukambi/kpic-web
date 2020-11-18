@@ -38,19 +38,19 @@ class Patient extends Model
         );
     }
 
-    public function lookups()
-    {
-        return $this->hasMany(
-            Lookup::class,
-            'patient_id'
-        );
-    }
-
     public function icon()
     {
         return $this->belongsTo(
             Icon::class,
             'icon_id'
+        );
+    }
+
+    public function trails()
+    {
+        return $this->hasMany(
+            AuditTrail::class,
+            'patient_id'
         );
     }
 }

@@ -81,7 +81,12 @@
                                     <td>{{ $trail->created_at->format('g:i a') }}</td>
                                     <td>{!! $trail->created_at->format('j<\s\up>S</\s\up> F Y') !!}</td>
                                     <td>{{ $trail->sep->name }}</td>
-                                    <td>{{ $trail->sep->region->name }}</td>
+                                    @if(isset($trail->sep->region))
+                                        <td>{{ $trail->sep->region->name }}</td>
+                                    @else
+                                        <td class="text-danger">N/A</td>
+                                    @endif
+
                                     <td>{{ $trail->user->name }}</td>
                                     <td>{{ $trail->action }}</td>
                                 </tr>

@@ -41,4 +41,12 @@ class Sep extends Model
             'type_id'
         );
     }
+
+    public function patients()
+    {
+        return $this->hasMany(
+            Patient::class,
+            'sep_id'
+        );
+    }
 }

@@ -17,11 +17,19 @@ class DatabaseSeeder extends Seeder
              SepTypeTableSeeder::class,
              PcnTableSeeder::class,
              RoleTableSeeder::class,
-             UserTableSeeder::class,
-             SepTableSeeder::class,
              OauthSeeder::class,
-             KPICTableSeeder::class,
-             ManagerSeeder::class
          ]);
+
+         if (config('settings.live_data')){
+             $this->call([
+                 LiveDataSeeder::class
+             ]);
+         } else {
+             $this->call([
+                 UserTableSeeder::class,
+                 SepTableSeeder::class,
+                 KPICTableSeeder::class
+             ]);
+         }
     }
 }

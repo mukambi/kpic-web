@@ -51,7 +51,11 @@
                                 <tr>
                                     <td>{{ $sep->name }}</td>
                                     <td>{{ $sep->type->name }}</td>
-                                    <td>{{ ucwords(strtolower($sep->region->name)) }}</td>
+                                    @if(isset($sep->region))
+                                        <td>{{ ucwords(strtolower($sep->region->name)) }}</td>
+                                    @else
+                                        <td class="text-danger">N/A</td>
+                                    @endif
                                     <td>{{ $sep->code ?: 'N/A' }}</td>
                                     <td>{{ $sep->users->count() }}</td>
                                     <td>

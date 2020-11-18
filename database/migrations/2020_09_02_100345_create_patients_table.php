@@ -18,7 +18,7 @@ class CreatePatientsTable extends Migration
             $table->longText('kpic_code')->nullable();
             $table->uuid('sep_id');
             $table->uuid('icon_id');
-            $table->uuid('creator_id');
+            $table->uuid('creator_id')->nullable();
             $table->boolean('possible_duplicate');
             $table->timestampsTz();
 
