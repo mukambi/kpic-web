@@ -65,7 +65,10 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
-            'sep_id' => 'nullable|uuid'
+            'sep_id' => 'nullable|uuid',
+            'roles' => 'required|array'
+        ],[],[
+            'roles' => 'users role'
         ]);
 
         DB::transaction(function () use ($request, &$password, &$user){
