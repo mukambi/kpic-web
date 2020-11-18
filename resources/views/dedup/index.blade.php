@@ -4,7 +4,38 @@
     <link rel="stylesheet" href="{{ asset('/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css') }}">
 @endsection
 @section('content')
-    @component('layouts.components.breadcrumbs',['name' => 'Possible Duplicate KPICs'])@endcomponent
+    @if(count($regions))
+        <div class="row">
+            <div class="mr-auto">
+                <div class="col mb-4">
+                    <nav class="page-breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{{ 'Possible Duplicate KPICs' }}</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+            <div class="ml-auto">
+                <div class="col mb-4">
+                    <div class="dropdown">
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ $selected_region ? ucwords(strtolower($selected_region->name)) : 'Select Region' }}
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item {{ $selected_region  ? null : 'active'}}"
+                               href="{{ route('dedup.index') }}">All Regions</a>
+                            @foreach($regions as $region)
+                                <a class="dropdown-item {{ $selected_region && ($selected_region->id == $region->id) ? 'active' : null }}"
+                                   href="{{ route('dedup.index', ['region' => $region->id]) }}">{{ ucwords(strtolower($region->name)) }}</a>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">

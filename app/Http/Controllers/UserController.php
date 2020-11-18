@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Traits\ManageFilter;
 use App\Notifications\UserRegisteredNotification;
+use App\Region;
 use App\Sep;
 use App\User;
 use Illuminate\Contracts\Foundation\Application;
@@ -15,17 +17,36 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    use ManageFilter;
+
     public function __construct()
     {
         $this->middleware('auth');
         $this->middleware('active');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $this->authorize('view_system_users');
+
+        $region = null;
+        $builder = User::with('roles', 'sep.region')->latest();
+
+        if ($request->has('region')) {
+            $region = Region::find($request->input('region'));
+            if ($region) {
+                $builder = $builder->whereHas('sep.region', function ($query) use ($region) {
+                    return $query->where('regions.id', $region->id);
+                });
+            } else {
+                return redirect()->route('users.index')->with('error', 'An error occurred. Try Again!');
+            }
+        }
+
         return view('users.index',[
-            'users' => User::with('roles')->get()
+            'users' => $builder->get(),
+            'regions' => $this->getAllRegions(),
+            'selected_region' => $region
         ]);
     }
 
