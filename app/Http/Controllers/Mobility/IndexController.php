@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Mobility;
 
+use App\AuditTrail;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\GeneratesKPIC;
 use App\Patient;
@@ -20,16 +21,18 @@ class IndexController extends Controller
     public function index(Request $request)
     {
         $this->authorize('view_mobility_list');
-        $patients = [];
+        $trails = [];
         $kpic_code = null;
         if($kpic_code = $request->get('code')){
-            $patients = Patient::with('sep.region')
-                ->where('kpic_code', $kpic_code)
+            $trails = AuditTrail::with('sep.region')
+                ->whereHas('patient', function ($query) use($kpic_code){
+                    $query->where('kpic_code', $kpic_code);
+                })
+                ->latest()
                 ->get();
-            $this->storeTrailsAndLookups($request, $patients);
         }
         return view('mobility.index', [
-            'patients' => $patients,
+            'trails' => $trails,
             'short_kpic_code' => $kpic_code
         ]);
     }

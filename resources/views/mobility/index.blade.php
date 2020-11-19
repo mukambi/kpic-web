@@ -48,6 +48,7 @@
                                 <th>Date</th>
                                 <th>Service Entry Point</th>
                                 <th>Region</th>
+                                <th>Action</th>
                             </tr>
                             </thead>
                             <tfoot>
@@ -57,20 +58,22 @@
                                 <th>Date</th>
                                 <th>Service Entry Point</th>
                                 <th>Region</th>
+                                <th>Action</th>
                             </tr>
                             </tfoot>
                             <tbody>
-                            @foreach($patients as $patient)
+                            @foreach($trails as $trail)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $patient->created_at->format('g:i a') }}</td>
-                                    <td>{!! $patient->created_at->format('j<\s\up>S</\s\up> F Y') !!}</td>
-                                    <td>{{ $patient->sep->name }}</td>
-                                    @if($patient->sep->region)
-                                        <td>{{ $patient->sep->region->name }}</td>
+                                    <td>{{ $trail->created_at->format('g:i a') }}</td>
+                                    <td>{!! $trail->created_at->format('j<\s\up>S</\s\up> F Y') !!}</td>
+                                    <td>{{ $trail->sep->name }}</td>
+                                    @if($trail->sep->region)
+                                        <td>{{ $trail->sep->region->name }}</td>
                                     @else
                                         <td class="text-danger">N/A</td>
                                     @endif
+                                    <td>{{ $trail->action }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
