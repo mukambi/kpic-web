@@ -74,7 +74,7 @@ trait GeneratesKPIC
             'yob' => 'required|integer|max:' . date('Y'),
             'mob' => 'nullable|string|max:255',
             'icon' => 'required|uuid',
-            'possible_duplicate' => 'nullable|in:true'
+            'possible_duplicate' => 'nullable|in:true,false'
         ]);
     }
 
@@ -162,14 +162,6 @@ trait GeneratesKPIC
                 ->get();
 
             foreach ($patients as $patient) {
-                $array = collect($patients)->reject(function ($p) use ($patient) {
-                    return $p->id == $patient->id;
-                })->pluck('id')->toArray();
-                $patient->lookups()->create([
-                    'user_id' => $request->user()->id,
-                    'sep_id' => $patient->sep->id,
-                    'duplicate_patient_ids' => json_encode($array)
-                ]);
                 $this->storeTrail($patient, $patient->sep, 'Search', auth()->user());
             }
         });
