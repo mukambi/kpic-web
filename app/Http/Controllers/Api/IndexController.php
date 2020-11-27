@@ -52,6 +52,11 @@ class IndexController extends Controller
         return response()->json(Sep::with('type')->get());
     }
 
+    public function user(Request $request)
+    {
+        return response()->json($request->user()->load('sep'));
+    }
+
     public function sepsTypes()
     {
         $this->authorize('api_get_seps_types');
