@@ -7,12 +7,9 @@ use App\Notifications\UserRegisteredNotification;
 use App\Region;
 use App\Sep;
 use App\User;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\View\View;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -43,7 +40,7 @@ class UserController extends Controller
             }
         }
 
-        return view('users.index',[
+        return view('users.index', [
             'users' => $builder->get(),
             'regions' => $this->getAllRegions(),
             'selected_region' => $region
@@ -53,8 +50,34 @@ class UserController extends Controller
     public function create()
     {
         $this->authorize('create_system_users');
+        $supported_roles = [];
+        foreach (auth()->user()->roles->pluck('name') as $user_role) {
+            $supported_roles = array_merge($supported_roles, [
+                'super admin' => [
+                    'super admin',
+                    'admin',
+                    'manager',
+                    'user'
+                ],
+                'admin' => [
+                    'admin',
+                    'manager',
+                    'user'
+                ],
+                'manager' => [
+                    'manager',
+                    'user'
+                ],
+                'user' => [
+                    'user'
+                ]
+            ][$user_role]);
+        }
+
         return view('users.create', [
-            'roles' => Role::all(),
+            'roles' => Role::all()->filter(function ($role) use ($supported_roles) {
+                return in_array($role->name, $supported_roles);
+            }),
             'seps' => Sep::query()->orderBy('name')->get()
         ]);
     }
@@ -67,11 +90,11 @@ class UserController extends Controller
             'email' => 'required|email|unique:users',
             'sep_id' => 'nullable|uuid',
             'roles' => 'required|array'
-        ],[],[
+        ], [], [
             'roles' => 'users role'
         ]);
 
-        DB::transaction(function () use ($request, &$password, &$user){
+        DB::transaction(function () use ($request, &$password, &$user) {
             $password = $this->generateRandomString();
             $user = User::create([
                 'name' => $request->name,
@@ -80,14 +103,14 @@ class UserController extends Controller
                 'password' => Hash::make($password)
             ]);
 
-            foreach ($request->roles as $name=>$value){
+            foreach ($request->roles as $name => $value) {
                 $role = Role::where('name', $name)->first();
-                if($role){
+                if ($role) {
                     $user->roles()->save($role);
                 }
             }
 
-            if(!is_null($request->sep_id)){
+            if (!is_null($request->sep_id)) {
                 $sep = Sep::query()->findOrFail($request->sep_id);
                 $sep->users()->save($user);
             }
@@ -97,7 +120,8 @@ class UserController extends Controller
 //        return redirect()->route('users.index')->with('success', 'You have successfully registered a new user. Username/Email: ' . $user->email . ', Password: ' . $password);
     }
 
-    public function generateRandomString($length = 10) {
+    public function generateRandomString($length = 10)
+    {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
         $randomString = '';
@@ -111,7 +135,7 @@ class UserController extends Controller
     {
         $this->authorize('activate_system_users');
 
-        DB::transaction(function () use ($user){
+        DB::transaction(function () use ($user) {
             $user->update([
                 'activated_at' => now()
             ]);
@@ -124,7 +148,7 @@ class UserController extends Controller
     {
         $this->authorize('deactivate_system_users');
 
-        DB::transaction(function () use ($user){
+        DB::transaction(function () use ($user) {
             $user->update([
                 'activated_at' => null
             ]);
