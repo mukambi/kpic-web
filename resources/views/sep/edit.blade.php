@@ -61,8 +61,8 @@
                                 @enderror
                             </div>
                             <div class="col-md-6">
-                                <label for="region_id">{{ __('Region') }}</label>
-                                <select name="region_id" id="region_id" class="form-control @error('region_id') is-invalid @enderror">
+                                <label for="region_id">{{ __('Region') }}<span class="text-danger">*</span></label>
+                                <select name="region_id" id="region_id" class="form-control @error('region_id') is-invalid @enderror" required>
                                     <option {{ old('region_id') || ($sep->region && $sep->region->id) ? null : "selected" }} disabled>Select Region</option>
                                     @foreach($regions as $region)
                                         <option

@@ -42,7 +42,10 @@ class SepController extends Controller
             'code' => 'nullable|integer|unique:seps',
             'name' => 'required|string|max:255',
             'type_id' => 'required|uuid|exists:sep_types,id',
-            'region_id' => 'nullable|uuid|exists:regions,id',
+            'region_id' => 'required|uuid|exists:regions,id',
+        ], [], [
+            'type_id' => 'type',
+            'region_id' => 'region'
         ]);
 
         DB::transaction(function () use ($request) {
@@ -77,7 +80,10 @@ class SepController extends Controller
             'code' => ['nullable', 'integer', Rule::unique('seps')->ignore($sep->id)],
             'name' => 'required|string|max:255',
             'type_id' => 'required|uuid|exists:sep_types,id',
-            'region_id' => 'nullable|uuid|exists:regions,id',
+            'region_id' => 'required|uuid|exists:regions,id',
+        ], [], [
+            'type_id' => 'type',
+            'region_id' => 'region'
         ]);
 
         DB::transaction(function () use ($request, $sep) {
@@ -106,9 +112,9 @@ class SepController extends Controller
     public function updateUsers(Request $request, $id)
     {
         $this->authorize('edit_sep_users');
-        DB::transaction(function () use ($request, $id){
+        DB::transaction(function () use ($request, $id) {
             $sep = Sep::findOrFail($id);
-            if(is_array($request->users) && count($request->users)){
+            if (is_array($request->users) && count($request->users)) {
                 $sep->users->each->update([
                     'sep_id' => null
                 ]);
