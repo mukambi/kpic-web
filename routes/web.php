@@ -15,10 +15,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'HomeController@welcome')->name('welcome');
+Route::get('/password/change', 'Auth\ManagePasswordController@edit')->name('password.change');
+Route::post('/password/save', 'Auth\ManagePasswordController@update')->name('password.save');
 
 Auth::routes(['register' => false, 'verify' => true]);
 
-Route::middleware('verified')->group(function (){
+Route::middleware(['verified', 'password.active'])->group(function (){
     Route::get('/home', 'HomeController@index')->name('home');
 
     Route::get('/configuration/sep-types', 'Configuration\SepTypeController@index')->name('configuration.sep-type.index');

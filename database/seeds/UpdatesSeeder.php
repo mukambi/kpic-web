@@ -1,5 +1,6 @@
 <?php
 
+use App\User;
 use Illuminate\Database\Seeder;
 
 class UpdatesSeeder extends Seeder
@@ -14,5 +15,11 @@ class UpdatesSeeder extends Seeder
         $this->call([
             NewRolesTableSeeder::class
         ]);
+
+        foreach (User::all() as $user){
+            $user->update([
+                'password_activated_at' => now()
+            ]);
+        }
     }
 }

@@ -22,6 +22,12 @@
                         <div class="dropdown-body">
                             <ul class="profile-nav p-0 pt-3">
                                 <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('password.change') }}">
+                                        <i data-feather="key"></i>
+                                        <span>{{ __('Change Password') }}</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

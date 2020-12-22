@@ -44,6 +44,7 @@ class UserRegisteredNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+            ->subject('Successful Registration')
             ->line('You have succesfully been registered to ' . config('app.name') . '. To access your account use ' . $notifiable->email . ' as your email and ' . $this->password . ' as your password')
             ->action('Login', route('login'))
             ->line('For help, please contact support');

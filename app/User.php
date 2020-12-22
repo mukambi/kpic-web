@@ -22,7 +22,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'sep_id', 'activated_at'
+        'name', 'email', 'password', 'sep_id', 'activated_at', 'password_activated_at'
     ];
 
     /**
@@ -62,5 +62,10 @@ class User extends Authenticatable implements MustVerifyEmail
             Patient::class,
             'creator_id'
         );
+    }
+
+    public function isActivePassword()
+    {
+        return !empty($this->password_activated_at);
     }
 }
