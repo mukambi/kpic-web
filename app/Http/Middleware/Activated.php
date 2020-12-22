@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Exceptions\UserDeactivated;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -21,6 +22,7 @@ class Activated
             return $next($request);
         }
 
-        abort('403', 'You account is not activated. Please contact the Admin or Manager for Assistance.');
+        throw new UserDeactivated('You account is not activated. Please contact the Admin or Manager for Assistance.');
+//        abort('403', 'You account is not activated. Please contact the Admin or Manager for Assistance.');
     }
 }
