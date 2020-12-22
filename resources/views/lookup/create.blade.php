@@ -3,7 +3,7 @@
     @parent
 @endsection
 @section('content')
-    @component('layouts.components.breadcrumbs', ['name' => 'Search KPIC Code'])@endcomponent
+    @component('layouts.components.breadcrumbs', ['name' => 'Search KPIC'])@endcomponent
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">

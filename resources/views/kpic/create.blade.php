@@ -3,14 +3,14 @@
     @parent
 @endsection
 @section('content')
-    @component('layouts.components.breadcrumbs', ['name' => 'Create KPIC Code'])@endcomponent
+    @component('layouts.components.breadcrumbs', ['name' => 'Create KPIC'])@endcomponent
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">Create KPIC Code</h6>
+                    <h6 class="card-title">Create KPIC</h6>
                     <p class="card-description">
-                        Fill in the field below to create KPIC code
+                        Fill in the field below to create KPIC
                     </p>
                     <form action="{{ route('list.kpic.store') }}" method="post">
                         @csrf
