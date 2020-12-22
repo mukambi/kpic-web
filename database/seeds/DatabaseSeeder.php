@@ -20,16 +20,14 @@ class DatabaseSeeder extends Seeder
              OauthSeeder::class,
          ]);
 
-         if (config('settings.live_data')){
-             $this->call([
-                 LiveDataSeeder::class
-             ]);
-         } else {
-             $this->call([
-                 UserTableSeeder::class,
-                 SepTableSeeder::class,
-                 KPICTableSeeder::class
-             ]);
-         }
+         $this->call([
+             UserTableSeeder::class,
+             SepTableSeeder::class,
+             KPICTableSeeder::class
+         ]);
+
+         $this->call([
+             UpdatesSeeder::class
+         ]);
     }
 }

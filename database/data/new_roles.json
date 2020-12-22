@@ -1,0 +1,8 @@
+[
+  {
+    "name": "user",
+    "permissions": [
+      "view_mobility_list"
+    ]
+  }
+]
