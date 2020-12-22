@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Traits\GeneratesKPIC;
 use App\Http\Traits\ManageFilter;
 use App\Notifications\UserRegisteredNotification;
 use App\Region;
@@ -14,7 +15,7 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
-    use ManageFilter;
+    use ManageFilter, GeneratesKPIC;
 
     public function __construct()
     {
@@ -78,7 +79,7 @@ class UserController extends Controller
             'roles' => Role::all()->filter(function ($role) use ($supported_roles) {
                 return in_array($role->name, $supported_roles);
             }),
-            'seps' => Sep::query()->orderBy('name')->get()
+            'seps' => $this->getSeps()
         ]);
     }
 

@@ -34,18 +34,6 @@ class IndexController extends Controller
         ]);
     }
 
-    public function getSeps()
-    {
-        $user = auth()->user() ;
-        $roles = $user->roles->pluck('name')->toArray();
-
-        if(!(in_array('super admin', $roles) || in_array('admin', $roles)) && isset($user->sep->region)){
-            return $user->sep->region->seps;
-        } else {
-            return Sep::all();
-        }
-    }
-
     public function store(Request $request)
     {
         $this->authorize('create_kpic');

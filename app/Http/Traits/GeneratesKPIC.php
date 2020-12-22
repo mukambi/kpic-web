@@ -187,4 +187,16 @@ trait GeneratesKPIC
     {
         return (string)sprintf("%05d", $patient->id);
     }
+
+    public function getSeps()
+    {
+        $user = auth()->user() ;
+        $roles = $user->roles->pluck('name')->toArray();
+
+        if(!(in_array('super admin', $roles) || in_array('admin', $roles)) && isset($user->sep->region)){
+            return $user->sep->region->seps()->orderBy('name')->get();
+        } else {
+            return Sep::query()->orderBy('name')->get();
+        }
+    }
 }
