@@ -1,6 +1,6 @@
 @include('layouts.header')
 <div class="main-wrapper" id="app">
-    @if (!Route::is(['register', 'login', 'password*']))
+    @if (!Route::is(['register', 'login', 'password*', 'verification.*']))
         <div class="horizontal-menu">
             @include('layouts.topbar')
             @include('layouts.bottombar')
