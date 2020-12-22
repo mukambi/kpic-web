@@ -4,5 +4,23 @@
     "permissions": [
       "view_mobility_list"
     ]
+  },
+  {
+    "name": "manager",
+    "permissions": [
+      "reset_user_password"
+    ]
+  },
+  {
+    "name": "admin",
+    "permissions": [
+      "reset_user_password"
+    ]
+  },
+  {
+    "name": "super admin",
+    "permissions": [
+      "reset_user_password"
+    ]
   }
 ]

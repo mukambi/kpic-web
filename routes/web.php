@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@welcome')->name('welcome');
 Route::get('/password/change', 'Auth\ManagePasswordController@edit')->name('password.change');
+Route::get('/password/deactivate/{user?}', 'Auth\ManagePasswordController@deactivate')->name('password.deactivate');
 Route::post('/password/save', 'Auth\ManagePasswordController@update')->name('password.save');
 
 Auth::routes(['register' => false, 'verify' => true]);

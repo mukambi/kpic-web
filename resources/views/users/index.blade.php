@@ -44,6 +44,10 @@
                     @can('view_system_users')
                         <a href="{{ route('users.create') }}" class="btn btn-primary">Register new user</a>
                     @endcan
+                    @can('reset_user_password')
+                        <a href="{{ route('password.deactivate') }}" class="btn btn-outline-danger">Reset All
+                            Password</a>
+                    @endcan
                 </div>
             </div>
         </div>
@@ -111,6 +115,10 @@
                                     </td>
                                     <td>
                                         @if($user->id != auth()->id())
+                                            @can('reset_user_password')
+                                                <a href="{{ route('password.deactivate', ['user' => $user]) }}"
+                                                   class="btn btn-outline-danger">Reset Password</a>
+                                            @endcan
                                             @if(!$user->isActivated())
                                                 @can('activate_system_users')
                                                     <a class="btn btn-success" href="#"
@@ -140,6 +148,8 @@
                                                     </form>
                                                 @endcan
                                             @endif
+                                        @else
+                                            <a href="{{ route('password.change') }}" class="btn btn-outline-success">Change My Password</a>
                                         @endif
                                     </td>
                                 </tr>
