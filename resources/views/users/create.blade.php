@@ -46,7 +46,7 @@
                                 @foreach($roles as $role)
                                     <div class="form-check form-check-flat form-check-primary">
                                         <label class="form-check-label">
-                                            <input type="checkbox" class="form-check-input" name="roles[{{$role->name}}]">
+                                            <input type="checkbox" class="form-check-input" name="roles[{{$role->name}}]" {{ old('roles.' . $role->name) ? 'checked' : null }}>
                                             {{ ucfirst(strtolower($role->name)) }}
                                         </label>
                                     </div>
@@ -55,8 +55,8 @@
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <label for="sep_id">{{ __('Select Service Entry Provider') }}</label>
-                                <select name="sep_id" id="sep_id" class="form-control @error('sep_id') is-invalid @enderror">
+                                <label for="sep_id">{{ __('Select Service Entry Provider') }}<span class="text-danger">*</span></label>
+                                <select name="sep_id" id="sep_id" class="form-control @error('sep_id') is-invalid @enderror" required>
                                     <option {{ old('sep_id') ? null : "selected" }} disabled>Select Service Entry Provider</option>
                                     @foreach($seps as $sep)
                                         <option {{ old('sep_id') && old('sep_id') == $sep->id ? 'selected' : null }} value="{{ $sep->id }}">{{ $sep->name }}</option>
