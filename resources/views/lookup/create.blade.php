@@ -8,9 +8,9 @@
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">Search KPIC Code</h6>
+                    <h6 class="card-title">Search KPIC</h6>
                     <p class="card-description">
-                        Fill in the field below to search KPIC code
+                        Fill in the field below to search KPIC
                     </p>
                     <form action="{{ route('list.lookup.search') }}" method="post">
                         @csrf
@@ -113,7 +113,7 @@
                                 </button>
                                 @can('lookup_kpic')
                                     <button type="submit" class="btn btn-primary">
-                                        <i class="la la-check-square-o"></i> Lookup
+                                        <i class="la la-check-square-o"></i> Search
                                     </button>
                                 @endcan
                             </div>
