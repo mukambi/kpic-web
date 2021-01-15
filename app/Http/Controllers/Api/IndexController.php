@@ -33,6 +33,33 @@ class IndexController extends Controller
         return response()->json($patients);
     }
 
+    public function store(Request $request)
+    {
+        $this->authorize('api_generate_kpic');
+        $this->validateStore($request);
+        $creator = $request->user();
+        $sep = Sep::find($request->sep_id);
+        $patient = Patient::create([
+            'kpic_code' => $request->kpic_code,
+            'sep_id' => $sep->id,
+            'icon_id' => $request->icon_id,
+            'possible_duplicate' => $request->possible_duplicate,
+            'creator_id' => $creator->id
+        ]);
+        $this->storeTrail($patient, $sep, 'Generated', $creator);
+        return response()->json($patient);
+    }
+
+    public function validateStore(Request $request): void
+    {
+        $request->validate([
+            'kpic_code' => 'required|string',
+            'sep_id' => 'required|exists:seps,id',
+            'icon_id' => 'required|exists:icons,id',
+            'possible_duplicate' => 'required|boolean'
+        ]);
+    }
+
     public function generate(Request $request)
     {
         $this->authorize('api_generate_kpic');
@@ -49,7 +76,7 @@ class IndexController extends Controller
     public function seps()
     {
         $this->authorize('api_get_seps');
-        return response()->json(Sep::with('type')->get());
+        return response()->json(Sep::with('type', 'region')->get());
     }
 
     public function user(Request $request)
