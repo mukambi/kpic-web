@@ -46,6 +46,7 @@ class Patient extends Model
         );
     }
 
+
     public function trails()
     {
         return $this->hasMany(
