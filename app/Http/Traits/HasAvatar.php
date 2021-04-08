@@ -68,6 +68,9 @@ trait HasAvatar
      */
     public function getDefaultAvatar()
     {
+        // Set default avatar
+        return url('https://i.stack.imgur.com/Vc2tC.png?s=40&g=1');
+
         // Check if environment is local
         if (app()->environment('local')) {
             return url('https://i.stack.imgur.com/Vc2tC.png?s=40&g=1');
