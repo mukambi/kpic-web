@@ -11,6 +11,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -44,36 +45,15 @@ class UserController extends Controller
         return view('users.index', [
             'users' => $builder->get(),
             'regions' => $this->getAllRegions(),
-            'selected_region' => $region
+            'selected_region' => $region,
+            'supported_roles' => $this->supportedRoles()
         ]);
     }
 
     public function create()
     {
         $this->authorize('create_system_users');
-        $supported_roles = [];
-        foreach (auth()->user()->roles->pluck('name') as $user_role) {
-            $supported_roles = array_merge($supported_roles, [
-                'super admin' => [
-                    'super admin',
-                    'admin',
-                    'manager',
-                    'user'
-                ],
-                'admin' => [
-                    'admin',
-                    'manager',
-                    'user'
-                ],
-                'manager' => [
-                    'manager',
-                    'user'
-                ],
-                'user' => [
-                    'user'
-                ]
-            ][$user_role]);
-        }
+        $supported_roles = $this->supportedRoles();
 
         return view('users.create', [
             'roles' => Role::all()->filter(function ($role) use ($supported_roles) {
@@ -101,7 +81,6 @@ class UserController extends Controller
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'email_verified_at' => now(),
                 'password' => Hash::make($password)
             ]);
 
@@ -119,6 +98,55 @@ class UserController extends Controller
         });
         $user->notify(new UserRegisteredNotification($password));
         return redirect()->route('users.index')->with('success', 'You have successfully registered a new user. Check your email address to get your login credentials.');
+//        return redirect()->route('users.index')->with('success', 'You have successfully registered a new user. Username/Email: ' . $user->email . ', Password: ' . $password);
+    }
+
+    public function edit(User $user)
+    {
+        $this->authorize('edit_user_details');
+        $supported_roles = $this->supportedRoles();
+
+        return view('users.edit', [
+            'supported_roles' => $supported_roles,
+            'roles' => Role::all()->filter(function ($role) use ($supported_roles) {
+                return in_array($role->name, $supported_roles);
+            }),
+            'seps' => $this->getSeps(),
+            'user' => $user,
+            'user_roles' => $user->getRoleNames()->toArray()
+        ]);
+    }
+
+    public function update(User $user, Request $request)
+    {
+        $this->authorize('edit_user_details');
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => ['required', 'email', Rule::unique('users')->ignore($user->id)],
+            'sep_id' => 'required|uuid',
+            'roles' => 'required|array'
+        ], [], [
+            'roles' => 'users role',
+            'sep_id' => 'service entry point'
+        ]);
+
+        DB::transaction(function () use ($user, $request, &$password) {
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'sep_id' => $request->sep_id
+            ]);
+
+//            dd($request->roles);
+            $user->syncRoles(array_keys($request->roles));
+//            foreach ($request->roles as $name => $value) {
+//                $role = Role::where('name', $name)->first();
+//                if ($role) {
+//                    $user->roles()->save($role);
+//                }
+//            }
+        });
+        return redirect()->route('users.index')->with('success', 'You have successfully edited user details');
 //        return redirect()->route('users.index')->with('success', 'You have successfully registered a new user. Username/Email: ' . $user->email . ', Password: ' . $password);
     }
 
@@ -157,5 +185,33 @@ class UserController extends Controller
         });
 
         return redirect()->back()->with('success', 'You have successfully deactivated the user');
+    }
+
+    public function supportedRoles(): array
+    {
+        $supported_roles = [];
+        foreach (auth()->user()->roles->pluck('name') as $user_role) {
+            $supported_roles = array_merge($supported_roles, [
+                'super admin' => [
+                    'super admin',
+                    'admin',
+                    'manager',
+                    'user'
+                ],
+                'admin' => [
+                    'admin',
+                    'manager',
+                    'user'
+                ],
+                'manager' => [
+                    'manager',
+                    'user'
+                ],
+                'user' => [
+                    'user'
+                ]
+            ][$user_role]);
+        }
+        return $supported_roles;
     }
 }

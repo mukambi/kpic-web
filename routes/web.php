@@ -74,6 +74,8 @@ Route::middleware(['verified', 'password.active'])->group(function (){
 
     Route::get('/users', 'UserController@index')->name('users.index');
     Route::get('/users/create', 'UserController@create')->name('users.create');
+    Route::get('/users/edit/{user}', 'UserController@edit')->name('users.edit');
+    Route::patch('/users/update/{user}', 'UserController@update')->name('users.update');
     Route::patch('/users/activate/{user}', 'UserController@activate')->name('users.activate');
     Route::patch('/users/deactivate/{user}', 'UserController@deactivate')->name('users.deactivate');
     Route::post('/users/create', 'UserController@store')->name('users.save');

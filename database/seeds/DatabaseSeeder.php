@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
          ]);
 
          $this->call([
+             PastUpdatesSeeder::class,
              UpdatesSeeder::class
          ]);
     }

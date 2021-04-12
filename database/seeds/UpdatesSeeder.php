@@ -15,11 +15,5 @@ class UpdatesSeeder extends Seeder
         $this->call([
             NewRolesTableSeeder::class
         ]);
-
-        foreach (User::all() as $user){
-            $user->update([
-                'password_activated_at' => now()
-            ]);
-        }
     }
 }

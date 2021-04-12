@@ -68,4 +68,42 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return !empty($this->password_activated_at);
     }
+
+    public function canEdit()
+    {
+        foreach ($this->roles as $role) {
+            if (in_array($role->name, $this->supportedRoles())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function supportedRoles(): array
+    {
+        $supported_roles = [];
+        foreach (auth()->user()->roles->pluck('name') as $user_role) {
+            $supported_roles = array_merge($supported_roles, [
+                'super admin' => [
+                    'super admin',
+                    'admin',
+                    'manager',
+                    'user'
+                ],
+                'admin' => [
+                    'admin',
+                    'manager',
+                    'user'
+                ],
+                'manager' => [
+                    'manager',
+                    'user'
+                ],
+                'user' => [
+                    'user'
+                ]
+            ][$user_role]);
+        }
+        return $supported_roles;
+    }
 }

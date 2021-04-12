@@ -114,6 +114,12 @@
                                         @endif
                                     </td>
                                     <td>
+                                        @if($user->canEdit() && $user->id != auth()->id())
+                                            @can('edit_user_details')
+                                                <a href="{{ route('users.edit', ['user' => $user]) }}"
+                                                   class="btn btn-outline-secondary">Edit User Details</a>
+                                            @endcan
+                                        @endif
                                         @if($user->id != auth()->id())
                                             @can('reset_user_password')
                                                 <a href="{{ route('password.deactivate', ['user' => $user]) }}"
