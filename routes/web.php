@@ -21,7 +21,7 @@ Route::post('/password/save', 'Auth\ManagePasswordController@update')->name('pas
 
 Auth::routes(['register' => false, 'verify' => true]);
 
-Route::middleware(['verified', 'password.active'])->group(function (){
+Route::middleware(['verified', 'password.active', 'restrict.sep'])->group(function (){
     Route::get('/home', 'HomeController@index')->name('home');
 
     Route::get('/configuration/sep-types', 'Configuration\SepTypeController@index')->name('configuration.sep-type.index');
