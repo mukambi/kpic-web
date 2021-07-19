@@ -35,8 +35,9 @@ class IndexController extends Controller
                 return redirect()->route('list.index')->with('error', 'An error occurred. Try Again!');
             }
         }
+
         return view('audit-trail.index', [
-            'trails' => $builder->get(),
+            'trails' => $builder->paginate(20),
             'regions' => $this->getAllRegions(),
             'selected_region' => $region
         ]);

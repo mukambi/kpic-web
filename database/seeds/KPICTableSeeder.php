@@ -1,5 +1,6 @@
 <?php
 
+use App\AuditTrail;
 use App\Http\Traits\GeneratesKPIC;
 use App\Icon;
 use App\Patient;
@@ -18,6 +19,7 @@ class KPICTableSeeder extends Seeder
      */
     public function run()
     {
+        $fake_kpic = 30000;
         $sep = Sep::first();
 
         $surname = 'Ageno';
@@ -35,6 +37,15 @@ class KPICTableSeeder extends Seeder
         $mob = 'April';
 
         $this->generatedSeedKPIC($sep, $surname, $first_name, $second_name, $yob, $mob);
+
+        factory(App\Patient::class, $fake_kpic)->create()->each(function ($patient){
+            AuditTrail::create([
+                'sep_id' => $patient->sep->id,
+                'patient_id' => $patient->id,
+                'user_id' => User::first()->id,
+                'action' => 'Generated'
+            ]);
+        });
     }
 
     public function generatedSeedKPIC($sep, $surname, $first_name, $second_name, $yob, $mob)
